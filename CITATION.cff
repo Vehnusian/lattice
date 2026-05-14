@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you reference this library, please cite it as below."
+title: "lattice — reference library of complex systems models"
+authors:
+  - family-names: Vehnusian
+    given-names: ""
+type: software
+license: MIT
+url: "https://github.com/Vehnusian/lattice"
+repository-code: "https://github.com/Vehnusian/lattice"
