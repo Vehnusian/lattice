@@ -13,7 +13,7 @@
 	let { tabs, active, onChange }: Props = $props();
 </script>
 
-<div class="flex flex-wrap items-center gap-x-1 gap-y-1 border-b border-(--color-rule) overflow-x-auto">
+<div class="flex flex-wrap items-center gap-x-1 gap-y-1 border-b border-(--color-rule)">
 	{#each tabs as tab (tab.id)}
 		<button
 			type="button"
