@@ -17,6 +17,22 @@ Built for university students through professors. Use it to quickly grasp an unf
 - A textbook replacement
 - A teaching curriculum
 
+## Stack
+
+SvelteKit, TypeScript, Tailwind, Vite. Python (NumPy / NetworkX) for reference implementations. Deployed on Vercel.
+
+## Development
+
+```sh
+pnpm install
+pnpm run dev
+```
+
+```sh
+pnpm run build
+pnpm run preview
+```
+
 ## Documentation
 
 - [`docs/positioning.md`](docs/positioning.md) — what this project is and is not
