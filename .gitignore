@@ -30,3 +30,6 @@ venv/
 .idea/
 
 bench/results-*.json
+
+# Local working memory
+NOTES.md
