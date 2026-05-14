@@ -43,4 +43,4 @@ pnpm run preview
 ## License
 
 - Code: [MIT](LICENSE)
-- Documentation and prose: [CC-BY-4.0](LICENSE-docs)
+- Documentation and prose: [CC-BY-4.0](docs/LICENSE-DOCS.txt)
