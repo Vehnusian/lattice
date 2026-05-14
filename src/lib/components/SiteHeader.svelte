@@ -1,4 +1,5 @@
 <script lang="ts">
+	import GithubMark from './GithubMark.svelte';
 	const repoUrl = 'https://github.com/Vehnusian/lattice';
 </script>
 
@@ -19,10 +20,11 @@
 			</a>
 			<a
 				href={repoUrl}
-				class="text-(--color-ink-muted) hover:text-(--color-ink) hover:no-underline"
 				rel="noopener external"
+				aria-label="Source on GitHub"
+				class="flex items-center text-(--color-ink-muted) hover:text-(--color-ink) hover:no-underline"
 			>
-				source
+				<GithubMark size={18} />
 			</a>
 		</nav>
 	</div>
