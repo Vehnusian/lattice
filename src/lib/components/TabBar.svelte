@@ -13,45 +13,30 @@
 	let { tabs, active, onChange }: Props = $props();
 </script>
 
-<div class="tabbar border-b border-(--color-rule)">
-	<div class="tabbar-scroll">
-		{#each tabs as tab (tab.id)}
-			<button
-				type="button"
-				class="tab font-mono text-xs uppercase tracking-wider px-3 py-2 -mb-px border-b-2 transition-colors duration-150 whitespace-nowrap"
-				style={active === tab.id
-					? 'color: var(--color-ink); border-color: var(--color-accent);'
-					: 'color: var(--color-ink-muted); border-color: transparent;'}
-				onclick={() => onChange(tab.id)}
-			>
-				{tab.label}
-			</button>
-		{/each}
-	</div>
+<div class="flex flex-wrap items-center gap-1.5">
+	{#each tabs as tab (tab.id)}
+		{@const isActive = active === tab.id}
+		<button
+			type="button"
+			onclick={() => onChange(tab.id)}
+			class="chip font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 transition-colors duration-150"
+			style={isActive
+				? 'background: var(--color-ink); color: var(--color-paper); border: 1px solid var(--color-ink);'
+				: 'background: transparent; color: var(--color-ink-muted); border: 1px solid var(--color-rule);'}
+		>
+			{tab.label}
+		</button>
+	{/each}
 </div>
 
 <style>
-	.tabbar {
-		position: relative;
-		mask-image: linear-gradient(to right, black calc(100% - 32px), transparent);
-		-webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent);
+	.chip {
+		border-radius: 999px;
+		white-space: nowrap;
 	}
 
-	.tabbar-scroll {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-		overflow-x: auto;
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-		padding-right: 32px;
-	}
-
-	.tabbar-scroll::-webkit-scrollbar {
-		display: none;
-	}
-
-	.tab:hover {
+	.chip:hover {
 		color: var(--color-ink) !important;
+		border-color: var(--color-rule-strong) !important;
 	}
 </style>
