@@ -1,1 +1,35 @@
 @import 'tailwindcss';
+@import './lib/theme/tokens.css';
+
+html {
+	font-family: var(--font-sans);
+	color: var(--color-text);
+	background: var(--color-bg);
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	min-height: 100dvh;
+}
+
+a {
+	color: var(--color-accent);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--color-accent-hover);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+code,
+pre {
+	font-family: var(--font-mono);
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+	border-radius: var(--radius-sm);
+}

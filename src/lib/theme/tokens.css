@@ -1,0 +1,23 @@
+@theme {
+	--color-bg: #fafaf9;
+	--color-bg-elevated: #ffffff;
+	--color-text: #0f172a;
+	--color-text-muted: #475569;
+	--color-text-subtle: #94a3b8;
+	--color-border: #e2e8f0;
+	--color-border-strong: #cbd5e1;
+	--color-accent: #4f46e5;
+	--color-accent-hover: #4338ca;
+
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--font-mono:
+		ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+
+	--max-w-prose: 65ch;
+	--max-w-page: 72rem;
+}
