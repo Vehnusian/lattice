@@ -1,11 +1,15 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
 @import 'tailwindcss';
 @import './lib/theme/tokens.css';
 
 html {
 	font-family: var(--font-sans);
-	color: var(--color-text);
-	background: var(--color-bg);
+	font-feature-settings: 'ss01', 'ss02', 'cv11';
+	color: var(--color-ink);
+	background: var(--color-paper);
 	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 
 body {
@@ -19,17 +23,22 @@ a {
 
 a:hover {
 	color: var(--color-accent-hover);
-	text-decoration: underline;
-	text-underline-offset: 2px;
 }
 
 code,
-pre {
+pre,
+.font-mono {
 	font-family: var(--font-mono);
+	font-feature-settings: 'ss01', 'ss02';
 }
 
 :focus-visible {
 	outline: 2px solid var(--color-accent);
-	outline-offset: 2px;
+	outline-offset: 3px;
 	border-radius: var(--radius-sm);
+}
+
+::selection {
+	background: var(--color-accent-soft);
+	color: var(--color-ink);
 }

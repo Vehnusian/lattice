@@ -6,38 +6,32 @@ Living document. Update at the end of every session: what was just done, what wa
 
 ## Current state
 
-SvelteKit + TypeScript scaffolded with the `sv` CLI (template: minimal). Prettier, ESLint, and Vitest enabled. Playwright skipped.
+SvelteKit + TypeScript + Tailwind v4 in place. Deployed on Vercel at `lattice-gray-one.vercel.app`. Auto-deploy on push to main.
 
-Tailwind CSS v4 wired via `@tailwindcss/vite`. Global stylesheet at `src/app.css` imports Tailwind. Root layout imports the stylesheet.
+Design direction locked: contemporary editorial-scientific. Warm paper background (`#F9F6F0`), deep ink text, single burnt-ochre accent (`#B5450B`). Geist and Geist Mono throughout (via `@fontsource-variable`).
 
-Home page (`src/routes/+page.svelte`) is a minimal placeholder using Tailwind classes. Confirmed rendering in `pnpm run dev`.
+Home page is a discipline-filtered card grid pulling from a typed model registry (`src/lib/models/registry.ts`). Ten models seeded, all status `planned`. Each card has a geometric SVG preview keyed to the model's discipline.
 
-Foundational docs intact at `docs/` and repo root.
+Components in place: `SiteHeader`, `SiteFooter`, `TabBar`, `ModelCard`, `CardPreview`. About page rewritten.
 
 ## Last decisions
 
-- Positioning: reference library, university audience, Brockmann content + Distill polish + real information architecture.
-- License: MIT for code, CC-BY-4.0 for prose and figures.
-- Stack: SvelteKit + TypeScript + Tailwind v4 + Vite.
-- Default rendering: Canvas2D. WebGL only when entity count or perf demands it.
-- Python reference implementations required for models without closed-form analytic benchmarks. Optional otherwise.
-- Sources: textbooks, peer-reviewed papers, and established open educational resources only. No Wikipedia, no blogs as citations.
-- Package manager: pnpm.
-- Repo visibility: private until first model is deployed.
+- Aesthetic: contemporary editorial-scientific (after rejecting generic system-ui slate-50, A-Quanta, B-monospace-brutalist, C-Swiss-Bauhaus directions).
+- Fonts: Geist + Geist Mono. No Inter.
+- Palette: warm paper, deep ink, one burnt-ochre accent. Restrained.
+- Home page identity: filterable card grid with abstract per-discipline previews. Live mini-simulations replace static SVGs once engines exist.
+- Model registry as the source of truth for what exists, what's planned, what's published.
 
 ## Next action
 
-1. Commit current state and push to GitHub.
-2. Set up Vercel deployment from the GitHub repo so every push auto-deploys.
-3. Design tokens: pick a small palette, type scale, spacing scale. Add to `src/app.css`.
-4. Site shell: header with project name, navigation placeholder, footer with license and source link.
-5. Component primitives: `Slider`, `Toggle`, `Select`, `ParamPanel`, `CitationBlock`, `ValidationBadge`, `CanvasViewport`.
-6. Demo page at `/_kit` showing each primitive in isolation (not linked from main nav).
+1. Build the model page template using Schelling as the example. Engine can be a placeholder for now — focus on the page layout, primitives, and citation block.
+2. Build component primitives needed for model pages: `Slider`, `Toggle`, `Select`, `ParamPanel`, `CitationBlock`, `ValidationBadge`, `CanvasViewport`.
+3. Add `/_kit` route showing each primitive in isolation for visual review.
+4. Once template is locked, drop in the real Schelling engine + Python reference + validation.
 
 ## Open questions
 
-- Project name and domain — currently using `lattice` as placeholder. Revisit before public launch.
-- First model: Schelling segregation (tentative, not locked).
-- Math rendering: KaTeX (likely) vs MathJax.
+- Project name and domain — currently using `lattice` as placeholder.
+- Math rendering library: KaTeX (likely).
 - Analytics: Plausible (likely) vs none.
-- Color palette direction: academic-clean (slate / off-white / one accent) vs something with more character. Decide before shell work.
+- How to handle the `live` preview animation on cards once we have engines — same engine code at a smaller scale, or a separate "preview" mode that runs cheaper?
