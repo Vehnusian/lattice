@@ -48,34 +48,32 @@
 				{@const x = 10 + col * 12}
 				{@const y = 10 + row * 13}
 				{@const isA = (col + row * 3 + (col * row) % 5) % 2 === 0}
-				<rect
-					x={x}
-					y={y}
-					width="8"
-					height="8"
-					fill={isA ? ink : accent}
-					opacity={isA ? 0.85 : 0.7}
-				/>
+				<rect x={x} y={y} width="8" height="8" fill={isA ? ink : accent} opacity={isA ? 0.85 : 0.7} />
 			{/each}
 		</g>
 	{:else if discipline === 'dynamics'}
 		<g fill="none" stroke-width="0.8">
-			<path
-				d="M 10 90 Q 40 30, 70 90 T 130 90 T 190 90"
-				stroke={ink}
-				opacity="0.75"
-			/>
-			<path
-				d="M 10 100 Q 40 160, 70 100 T 130 100 T 190 100"
-				stroke={accent}
-				opacity="0.8"
-			/>
+			<path d="M 10 90 Q 40 30, 70 90 T 130 90 T 190 90" stroke={ink} opacity="0.75" />
+			<path d="M 10 100 Q 40 160, 70 100 T 130 100 T 190 100" stroke={accent} opacity="0.8" />
+		</g>
+	{:else if discipline === 'synchronization'}
+		<g>
+			<circle cx="100" cy="75" r="48" fill="none" stroke={muted} stroke-width="0.4" />
+			{#each Array(12) as _, i}
+				{@const angle = (i / 12) * Math.PI * 2 - Math.PI / 2}
+				{@const cluster = i % 4 < 3 ? 0 : 1}
+				{@const r = cluster === 0 ? 48 : 30}
+				{@const x = 100 + Math.cos(angle) * r}
+				{@const y = 75 + Math.sin(angle) * r}
+				<circle cx={x} cy={y} r={cluster === 0 ? 3 : 2.5} fill={cluster === 0 ? ink : accent} />
+			{/each}
 		</g>
 	{:else if discipline === 'criticality'}
 		<g>
 			{#each Array(40) as _, i}
-				{@const x = Math.random() * 180 + 10}
-				{@const y = Math.random() * 130 + 10}
+				{@const seed = (i * 9301 + 49297) % 233280}
+				{@const x = ((seed * 7) % 180) + 10}
+				{@const y = ((seed * 13) % 130) + 10}
 				{@const r = i < 3 ? 6 : i < 10 ? 3 : 1.5}
 				<circle cx={x} cy={y} {r} fill={i < 3 ? accent : ink} opacity={i < 3 ? 0.9 : 0.6} />
 			{/each}
@@ -104,6 +102,62 @@
 					<rect x={x} y={y} width="6" height="12" fill={ink} opacity="0.85" />
 				{/if}
 			{/each}
+		</g>
+	{:else if discipline === 'morphogenesis'}
+		<g fill="none">
+			{#each Array(8) as _, i}
+				{@const offset = i * 18}
+				<path
+					d={`M 0 ${20 + offset} Q 50 ${10 + offset}, 100 ${20 + offset} T 200 ${20 + offset}`}
+					stroke={i % 2 === 0 ? ink : accent}
+					stroke-width="0.8"
+					opacity={i % 2 === 0 ? 0.7 : 0.6}
+				/>
+			{/each}
+		</g>
+	{:else if discipline === 'econophysics'}
+		<g>
+			{#each Array(24) as _, i}
+				{@const x = 12 + i * 7.5}
+				{@const h = 110 * Math.exp(-i / 6)}
+				{@const y = 130 - h}
+				<rect x={x} y={y} width="5" height={h} fill={i < 2 ? accent : ink} opacity={i < 2 ? 0.9 : 0.55} />
+			{/each}
+			<line x1="10" y1="130" x2="190" y2="130" stroke={muted} stroke-width="0.4" />
+		</g>
+	{:else if discipline === 'opinion'}
+		<g>
+			{#each Array(100) as _, i}
+				{@const col = i % 10}
+				{@const row = Math.floor(i / 10)}
+				{@const x = 20 + col * 16}
+				{@const y = 12 + row * 14}
+				{@const region = col < 5 && row < 5 ? 0 : col >= 5 && row < 5 ? 1 : col < 5 && row >= 5 ? 1 : 0}
+				<circle cx={x} cy={y} r="3" fill={region === 0 ? ink : accent} opacity="0.75" />
+			{/each}
+		</g>
+	{:else if discipline === 'active'}
+		<g>
+			{#each Array(14) as _, i}
+				{@const seed = (i * 9301 + 49297) % 233280}
+				{@const x = ((seed * 17) % 170) + 15}
+				{@const y = ((seed * 11) % 110) + 20}
+				{@const angle = (seed % 360) * (Math.PI / 180)}
+				{@const dx = Math.cos(angle) * 10}
+				{@const dy = Math.sin(angle) * 10}
+				<line x1={x} y1={y} x2={x + dx} y2={y + dy} stroke={i % 4 === 0 ? accent : ink} stroke-width="1.2" />
+				<circle cx={x + dx} cy={y + dy} r="2" fill={i % 4 === 0 ? accent : ink} />
+			{/each}
+		</g>
+	{:else if discipline === 'walks'}
+		<g fill="none" stroke-width="0.8">
+			<path
+				d="M 30 75 L 38 65 L 42 80 L 55 78 L 60 90 L 72 85 L 80 70 L 95 80 L 105 60 L 115 75 L 128 70 L 140 85 L 155 80 L 170 95"
+				stroke={ink}
+				opacity="0.8"
+			/>
+			<circle cx="30" cy="75" r="3" fill={accent} />
+			<circle cx="170" cy="95" r="3" fill={ink} />
 		</g>
 	{/if}
 </svg>
