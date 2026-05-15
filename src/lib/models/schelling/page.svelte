@@ -134,13 +134,17 @@
 				Schelling's qualitative finding is that the threshold needed for segregation is much
 				lower than intuition suggests. Sayama's example uses <Math tex={'\\tau = 0.5'} /> and
 				shows clear segregation. Below roughly <Math tex={'\\tau = 0.2'} /> the system stays
-				mixed.
+				mixed. Different applications use different <Math tex={'\\tau'} /> values: residential
+				segregation studies typically use 0.3 to 0.5; models of strong in-group identity or
+				territorial behavior use 0.6 and above.
 			</p>
 			<p>
-				At very high <Math tex={'\\tau'} /> (high homophily, around 0.7 and above) the system
-				does not reach a stationary state. Agents are too demanding: at any cluster boundary
-				they remain unsatisfied, and each move makes some other agent unsatisfied in turn.
-				The presets to the right select these regimes.
+				At very high <Math tex={'\\tau'} /> (high homophily) the system still settles, but it
+				does so by forming thick empty-cell boundaries between clusters. Empty cells do not
+				count toward an agent's satisfaction, so a wide enough empty buffer lets even
+				boundary agents see only same-type occupied neighbors. The result is unusually sharp
+				separation with prominent empty moats around each cluster. The presets to the right
+				select these regimes.
 			</p>
 		</section>
 

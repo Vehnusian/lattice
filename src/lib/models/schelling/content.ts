@@ -8,8 +8,9 @@ export const defaultParams = {
 
 // Illustrative regimes. Sayama uses th = 0.5 in his example and notes that
 // the critical threshold for segregation is much lower than intuition
-// suggests. At very high homophily (high τ) agents become too demanding to
-// satisfy and the system enters a non-stationary mixed state.
+// suggests. At very high homophily (high τ) the system still settles, but
+// it forms thick empty-cell boundaries between clusters — the buffer
+// mechanism that allows even demanding agents to find satisfaction.
 export const presets = [
 	{
 		label: 'Strong preference',
