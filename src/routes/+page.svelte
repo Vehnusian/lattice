@@ -4,6 +4,7 @@
 	import ModelCard from '$lib/components/ModelCard.svelte';
 	import TabBar from '$lib/components/TabBar.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import AmbientField from '$lib/components/AmbientField.svelte';
 
 	type Filter = Discipline | 'all';
 
@@ -21,20 +22,26 @@
 	});
 </script>
 
-<div class="mx-auto max-w-(--max-w-page) px-6 pt-12 pb-24">
-	<section class="max-w-2xl">
-		<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">
-			Reference library
-		</p>
-		<h1 class="mt-3 text-4xl font-semibold tracking-tight text-(--color-ink) sm:text-5xl">
-			Complex systems models,<br />
-			validated and explained.
-		</h1>
-		<p class="mt-5 text-lg leading-relaxed text-(--color-ink-muted)">
-			Interactive simulations, plain-language explanations, the underlying math, and citations
-			back to the literature. Built for university students and instructors.
-		</p>
-	</section>
+<div class="hero-wrap">
+	<AmbientField />
+	<div class="relative mx-auto max-w-(--max-w-page) px-6 pt-20 pb-16">
+		<section class="max-w-3xl">
+			<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">
+				Reference library
+			</p>
+			<h1 class="mt-3 text-4xl font-semibold tracking-tight text-(--color-ink) sm:text-5xl md:text-6xl">
+				How simple rules<br />
+				produce complex behavior.
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-(--color-ink-muted)">
+				A reference library of validated complex systems models. Each one has an interactive
+				simulation, the math, and citations to the source literature.
+			</p>
+		</section>
+	</div>
+</div>
+
+<div class="mx-auto max-w-(--max-w-page) px-6 pt-4 pb-24">
 
 	<div class="mt-16 flex flex-col gap-3 sm:flex-row sm:items-center">
 		<div class="flex-1">
@@ -81,6 +88,12 @@
 </div>
 
 <style>
+	.hero-wrap {
+		position: relative;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
 	.live-toggle:hover {
 		border-color: var(--color-ink) !important;
 	}
