@@ -30,6 +30,7 @@ venv/
 .idea/
 
 bench/results-*.json
+**/validation_results.json
 
 # Local working memory
 NOTES.md
