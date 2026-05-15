@@ -31,15 +31,6 @@
 
 	let { model }: { model: ModelEntry } = $props();
 
-	const toc = [
-		{ id: 'introduction', label: 'Introduction' },
-		{ id: 'how-it-works', label: 'How it works' },
-		{ id: 'math', label: 'Math' },
-		{ id: 'source', label: 'Source' },
-		{ id: 'references', label: 'References' },
-		{ id: 'cite', label: 'Cite' }
-	];
-
 	const schelling = new Schelling(defaultParams, 1);
 	const colors = { bg: '#F3EFE5', a: '#161513', b: '#B5450B' };
 
@@ -53,7 +44,7 @@
 	onDestroy(() => runner.pause());
 </script>
 
-<ModelPageLayout {model} {toc}>
+<ModelPageLayout {model}>
 	{#snippet sim()}
 		<CanvasViewport {draw} tick={runner.tick} />
 	{/snippet}
