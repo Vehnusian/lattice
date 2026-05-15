@@ -7,8 +7,9 @@ export const defaultParams = {
 };
 
 // Illustrative regimes. Sayama uses th = 0.5 in his example and notes that
-// the critical threshold can be much lower than intuition suggests. At very
-// high density the system enters a non-stationary mixed state.
+// the critical threshold for segregation is much lower than intuition
+// suggests. At very high homophily (high τ) agents become too demanding to
+// satisfy and the system enters a non-stationary mixed state.
 export const presets = [
 	{
 		label: 'Strong preference',
@@ -26,9 +27,9 @@ export const presets = [
 		params: { tolerance: 0.15, density: 0.9 }
 	},
 	{
-		label: 'Perpetual motion',
-		summary: 'τ 0.5 · d 0.98',
-		params: { tolerance: 0.5, density: 0.98 }
+		label: 'High homophily',
+		summary: 'τ 0.75 · d 0.9',
+		params: { tolerance: 0.75, density: 0.9 }
 	}
 ];
 

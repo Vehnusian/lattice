@@ -134,9 +134,13 @@
 				Schelling's qualitative finding is that the threshold needed for segregation is much
 				lower than intuition suggests. Sayama's example uses <Math tex={'\\tau = 0.5'} /> and
 				shows clear segregation. Below roughly <Math tex={'\\tau = 0.2'} /> the system stays
-				mixed. At very high density the system does not settle: agents keep moving because
-				each relocation makes some other agent unhappy. The presets to the right select
-				these regimes.
+				mixed.
+			</p>
+			<p>
+				At very high <Math tex={'\\tau'} /> (high homophily, around 0.7 and above) the system
+				does not reach a stationary state. Agents are too demanding: at any cluster boundary
+				they remain unsatisfied, and each move makes some other agent unsatisfied in turn.
+				The presets to the right select these regimes.
 			</p>
 		</section>
 
