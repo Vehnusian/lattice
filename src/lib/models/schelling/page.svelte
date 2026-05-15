@@ -115,15 +115,28 @@
 		<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 			<p>
 				Each cell of a square lattice is either empty or holds an agent of one of two types.
-				At every step, one unsatisfied agent relocates to a random empty cell. An agent is
+				Two parameters control the system. The density <Math tex={'d'} /> is the fraction of
+				cells that start occupied. The tolerance <Math tex={'\\tau'} /> is the minimum
+				fraction of like-type neighbors an agent requires to remain in place.
+			</p>
+			<p>
+				At each step, one unsatisfied agent relocates to a random empty cell. An agent is
 				unsatisfied when the fraction of its same-type neighbors, counted over the Moore
-				eight-cell neighborhood, falls below a tolerance threshold.
+				eight-cell neighborhood, falls below <Math tex={'\\tau'} />.
 			</p>
 			<p>
 				The system currently holds <LiveValue source="agents" /> agents, of which
 				<LiveValue source="unsatisfied" /> are unsatisfied. The segregation index, the mean
 				fraction of like-type neighbors over all occupied cells, is
 				<LiveValue source="segregation" format={(v) => v.toFixed(3)} />.
+			</p>
+			<p>
+				The model has one canonical finding. Even mild preferences (around
+				<Math tex={'\\tau = 1/3'} />) drive the system to sharply segregated configurations.
+				Below roughly <Math tex={'\\tau = 0.2'} /> the system stays mixed. Above
+				<Math tex={'\\tau = 0.5'} /> segregation is extreme. At very high density the system
+				gridlocks because there are too few empty cells for unsatisfied agents to move into.
+				The presets to the right select these regimes.
 			</p>
 		</section>
 

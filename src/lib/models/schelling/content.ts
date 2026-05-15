@@ -6,11 +6,31 @@ export const defaultParams = {
 	tolerance: 0.4
 };
 
+// Illustrative regimes of the model. The τ ≈ 1/3 case is the most cited
+// result: even mild preference produces sharp segregation. Below ~0.2 the
+// system stays mixed; above ~0.5 segregation is extreme. At very high
+// density the system gridlocks.
 export const presets = [
-	{ label: 'Sharp segregation', summary: 'τ 0.5 · d 0.9', params: { tolerance: 0.5, density: 0.9 } },
-	{ label: 'Mild preference', summary: 'τ 0.3 · d 0.9', params: { tolerance: 0.3, density: 0.9 } },
-	{ label: 'Sparse drift', summary: 'τ 0.5 · d 0.5', params: { tolerance: 0.5, density: 0.5 } },
-	{ label: 'Tight quarters', summary: 'τ 0.7 · d 0.95', params: { tolerance: 0.7, density: 0.95 } }
+	{
+		label: "Schelling's case (τ = 1/3)",
+		summary: 'τ 0.33 · d 0.9',
+		params: { tolerance: 0.33, density: 0.9 }
+	},
+	{
+		label: 'Below threshold (no segregation)',
+		summary: 'τ 0.15 · d 0.9',
+		params: { tolerance: 0.15, density: 0.9 }
+	},
+	{
+		label: 'Strong preference (extreme segregation)',
+		summary: 'τ 0.5 · d 0.9',
+		params: { tolerance: 0.5, density: 0.9 }
+	},
+	{
+		label: 'Gridlock (high density)',
+		summary: 'τ 0.5 · d 0.98',
+		params: { tolerance: 0.5, density: 0.98 }
+	}
 ];
 
 export const citation: Citation = {
