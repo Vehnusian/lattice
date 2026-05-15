@@ -1,104 +1,136 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { createNoise3D } from 'simplex-noise';
 
 	let canvas: HTMLCanvasElement;
+	let wrap: HTMLDivElement;
 	let raf = 0;
 	let stopped = false;
 
-	// Gray-Scott reaction-diffusion. Parameters here produce coral-like patterns.
-	const W = 180;
-	const H = 140;
-	const Du = 1.0;
-	const Dv = 0.5;
-	const F = 0.0545;
-	const k = 0.062;
-	const stepsPerFrame = 8;
+	const PARTICLE_COUNT = 180;
+	const NOISE_SCALE = 0.0022;
+	const TIME_SCALE = 0.00035;
+	const SPEED = 0.45;
 
-	let u = new Float32Array(W * H);
-	let v = new Float32Array(W * H);
-	let uNext = new Float32Array(W * H);
-	let vNext = new Float32Array(W * H);
+	interface Particle {
+		x: number;
+		y: number;
+		hue: 'ink' | 'accent';
+		age: number;
+		life: number;
+	}
 
-	function seed() {
-		for (let i = 0; i < W * H; i++) {
-			u[i] = 1;
-			v[i] = 0;
+	let particles: Particle[] = [];
+	let noise: ReturnType<typeof createNoise3D>;
+	let t = 0;
+	let W = 0;
+	let H = 0;
+	let dpr = 1;
+
+	function resetParticle(p: Particle) {
+		p.x = Math.random() * W;
+		p.y = Math.random() * H;
+		p.age = 0;
+		p.life = 200 + Math.random() * 400;
+	}
+
+	function initParticles() {
+		particles = [];
+		for (let i = 0; i < PARTICLE_COUNT; i++) {
+			const p: Particle = {
+				x: Math.random() * W,
+				y: Math.random() * H,
+				hue: Math.random() < 0.05 ? 'accent' : 'ink',
+				age: 0,
+				life: 200 + Math.random() * 400
+			};
+			particles.push(p);
 		}
-		// Sprinkle a few seed regions
-		const seeds = 18;
-		for (let s = 0; s < seeds; s++) {
-			const cx = Math.floor(Math.random() * (W - 20)) + 10;
-			const cy = Math.floor(Math.random() * (H - 20)) + 10;
-			const r = 3 + Math.floor(Math.random() * 4);
-			for (let dy = -r; dy <= r; dy++) {
-				for (let dx = -r; dx <= r; dx++) {
-					const x = cx + dx;
-					const y = cy + dy;
-					if (x < 0 || x >= W || y < 0 || y >= H) continue;
-					if (dx * dx + dy * dy > r * r) continue;
-					v[y * W + x] = 0.5 + Math.random() * 0.4;
-				}
-			}
+	}
+
+	function resize() {
+		if (!wrap || !canvas) return;
+		dpr = window.devicePixelRatio || 1;
+		W = wrap.clientWidth;
+		H = wrap.clientHeight;
+		canvas.width = Math.floor(W * dpr);
+		canvas.height = Math.floor(H * dpr);
+		canvas.style.width = `${W}px`;
+		canvas.style.height = `${H}px`;
+		const ctx = canvas.getContext('2d');
+		if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+		initParticles();
+		// Fill with paper background once
+		if (ctx) {
+			ctx.fillStyle = '#F9F6F0';
+			ctx.fillRect(0, 0, W, H);
 		}
 	}
 
 	function step() {
-		for (let y = 1; y < H - 1; y++) {
-			for (let x = 1; x < W - 1; x++) {
-				const i = y * W + x;
-				const ui = u[i];
-				const vi = v[i];
-				const lapU =
-					u[i - 1] + u[i + 1] + u[i - W] + u[i + W] - 4 * ui;
-				const lapV =
-					v[i - 1] + v[i + 1] + v[i - W] + v[i + W] - 4 * vi;
-				const uvv = ui * vi * vi;
-				uNext[i] = ui + Du * lapU - uvv + F * (1 - ui);
-				vNext[i] = vi + Dv * lapV + uvv - (F + k) * vi;
+		t += 1;
+		const tn = t * TIME_SCALE;
+		for (const p of particles) {
+			const angle = noise(p.x * NOISE_SCALE, p.y * NOISE_SCALE, tn) * Math.PI * 2.5;
+			p.x += Math.cos(angle) * SPEED;
+			p.y += Math.sin(angle) * SPEED;
+			p.age += 1;
+			if (
+				p.age > p.life ||
+				p.x < -20 ||
+				p.x > W + 20 ||
+				p.y < -20 ||
+				p.y > H + 20
+			) {
+				resetParticle(p);
 			}
 		}
-		[u, uNext] = [uNext, u];
-		[v, vNext] = [vNext, v];
 	}
 
 	function render() {
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return;
-		const img = ctx.createImageData(W, H);
-		for (let i = 0; i < W * H; i++) {
-			const value = Math.max(0, Math.min(1, v[i] * 2.6));
-			// Warm ochre tint: blend toward accent color
-			const r = Math.floor(181 * value);
-			const g = Math.floor(69 * value);
-			const b = Math.floor(11 * value);
-			img.data[i * 4 + 0] = r;
-			img.data[i * 4 + 1] = g;
-			img.data[i * 4 + 2] = b;
-			img.data[i * 4 + 3] = Math.floor(value * 255);
+
+		// Fade existing trails toward paper color
+		ctx.fillStyle = 'rgba(249, 246, 240, 0.035)';
+		ctx.fillRect(0, 0, W, H);
+
+		for (const p of particles) {
+			const color = p.hue === 'accent' ? 'rgba(181, 69, 11, 0.35)' : 'rgba(22, 21, 19, 0.18)';
+			ctx.fillStyle = color;
+			ctx.beginPath();
+			ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+			ctx.fill();
 		}
-		ctx.putImageData(img, 0, 0);
 	}
 
 	function loop() {
 		if (stopped) return;
-		for (let s = 0; s < stepsPerFrame; s++) step();
+		step();
 		render();
 		raf = requestAnimationFrame(loop);
 	}
 
 	onMount(() => {
-		canvas.width = W;
-		canvas.height = H;
+		noise = createNoise3D();
+		resize();
+		const ro = new ResizeObserver(resize);
+		ro.observe(wrap);
 
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		seed();
-		render();
 		if (!reduced) {
-			// Run a burst to develop the pattern before animating visibly
-			for (let s = 0; s < 600; s++) step();
-			render();
+			// Warm-up: develop initial trails so the page lands looking populated
+			for (let i = 0; i < 300; i++) {
+				step();
+				render();
+			}
 			raf = requestAnimationFrame(loop);
 		}
+
+		return () => {
+			stopped = true;
+			ro.disconnect();
+		};
 	});
 
 	onDestroy(() => {
@@ -107,7 +139,7 @@
 	});
 </script>
 
-<div class="ambient" aria-hidden="true">
+<div bind:this={wrap} class="ambient" aria-hidden="true">
 	<canvas bind:this={canvas}></canvas>
 </div>
 
@@ -118,15 +150,13 @@
 		overflow: hidden;
 		pointer-events: none;
 		z-index: 0;
-		mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 80%);
-		-webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 80%);
+		mask-image: radial-gradient(ellipse 80% 110% at 85% 50%, black 20%, transparent 85%);
+		-webkit-mask-image: radial-gradient(ellipse 80% 110% at 85% 50%, black 20%, transparent 85%);
 	}
 
 	canvas {
+		display: block;
 		width: 100%;
 		height: 100%;
-		image-rendering: pixelated;
-		opacity: 0.55;
-		filter: blur(2px) saturate(1.1);
 	}
 </style>
