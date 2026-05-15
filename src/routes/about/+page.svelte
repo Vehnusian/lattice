@@ -17,15 +17,15 @@
 
 	<section class="mt-10 space-y-5 leading-relaxed text-(--color-ink-muted)">
 		<p>
-			The canonical models of complex systems — segregation, epidemics, networks, cellular
-			automata, criticality, synchronization — are scattered across decades of papers, textbooks,
-			and one-off demos. Each is a small piece of universal behavior; together they form a
+			The canonical models of complex systems (segregation, epidemics, networks, cellular
+			automata, criticality, synchronization) are scattered across decades of papers, textbooks,
+			and one-off demos. Each is a small piece of universal behavior. Together they form a
 			recognizable canon.
 		</p>
 		<p>
-			Lattice collects them in one place. Each page presents a single model: an interactive
-			simulation with the parameters that actually change behavior, a plain-language explanation,
-			the underlying math, and a citation back to the original literature.
+			Lattice collects them in one place. Each page presents a single model with four pieces: an
+			interactive simulation, a plain-language explanation, the underlying math, and a citation
+			back to the original literature.
 		</p>
 		<p>
 			Built for university students and instructors. Use it to grasp an unfamiliar model in
@@ -40,10 +40,10 @@
 	<h2 class="mt-3 text-2xl font-semibold tracking-tight text-(--color-ink)">Validation</h2>
 	<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 		<p>
-			Every model is validated before publication. Where a closed-form analytic result exists —
-			the 2D Ising critical temperature near 2.269, the 2D site-percolation threshold near 0.593,
-			the Erdős–Rényi giant component at mean degree one — the implementation is checked against
-			that result, with tolerances documented.
+			Every model is validated before publication. Where a closed-form analytic result exists, the
+			implementation is checked against it with documented tolerances. Examples include the 2D
+			Ising critical temperature near 2.269, the 2D site-percolation threshold near 0.593, and the
+			Erdős–Rényi giant component at mean degree one.
 		</p>
 		<p>
 			For models without closed-form results, a Python reference implementation runs alongside
@@ -56,8 +56,8 @@
 	<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 		<p>
 			Each model page cites the original paper, the canonical textbook, and a free alternative
-			when one is available. Deviations from the original — modified dynamics, simplified
-			boundaries, alternative update rules — are disclosed in a short notes section on the same
+			when one is available. Deviations from the original (modified dynamics, simplified
+			boundaries, alternative update rules) are disclosed in a short notes section on the same
 			page.
 		</p>
 	</section>

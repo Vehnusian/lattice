@@ -4,23 +4,30 @@
 
 	interface Props {
 		params: Record<string, number>;
+		summary?: string;
 		children: Snippet;
 	}
 
-	let { params, children }: Props = $props();
+	let { params, summary, children }: Props = $props();
 	const runner = useRunner();
+
+	function apply() {
+		runner.setParams(params);
+	}
 </script>
 
 <button
 	type="button"
-	onclick={() => runner.setParams(params)}
-	class="preset group inline-flex w-full items-center justify-between border border-(--color-rule) bg-(--color-paper-2) px-4 py-3 text-left transition-colors"
-	style="border-radius: var(--radius-md);"
+	onclick={apply}
+	class="preset group flex w-full flex-col items-start gap-0.5 border border-(--color-rule) bg-(--color-paper) px-3 py-2 text-left transition-colors"
+	style="border-radius: var(--radius-sm);"
 >
-	<span class="text-(--color-ink)">{@render children()}</span>
-	<span class="font-mono text-[10px] uppercase tracking-wider text-(--color-ink-subtle) group-hover:text-(--color-accent)">
-		try →
+	<span class="text-sm text-(--color-ink) group-hover:text-(--color-accent)">
+		{@render children()}
 	</span>
+	{#if summary}
+		<span class="font-mono text-[10px] tabular-nums text-(--color-ink-subtle)">{summary}</span>
+	{/if}
 </button>
 
 <style>
