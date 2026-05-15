@@ -31,6 +31,15 @@
 
 	let { model }: { model: ModelEntry } = $props();
 
+	const toc = [
+		{ id: 'introduction', label: 'Introduction' },
+		{ id: 'how-it-works', label: 'How it works' },
+		{ id: 'math', label: 'Math' },
+		{ id: 'source', label: 'Source' },
+		{ id: 'references', label: 'References' },
+		{ id: 'cite', label: 'Cite' }
+	];
+
 	const schelling = new Schelling(defaultParams, 1);
 	const colors = { bg: '#F3EFE5', a: '#161513', b: '#B5450B' };
 
@@ -44,7 +53,7 @@
 	onDestroy(() => runner.pause());
 </script>
 
-<ModelPageLayout {model}>
+<ModelPageLayout {model} {toc}>
 	{#snippet sim()}
 		<CanvasViewport {draw} tick={runner.tick} />
 	{/snippet}
@@ -96,7 +105,9 @@
 	{/snippet}
 
 	{#snippet body()}
-		<h2 class="text-2xl font-semibold tracking-tight text-(--color-ink)">Introduction</h2>
+		<h2 id="introduction" class="text-2xl font-semibold tracking-tight text-(--color-ink)">
+			Introduction
+		</h2>
 		<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 			<p>
 				Thomas Schelling's 1971 segregation model is one of the earliest demonstrations that
@@ -111,7 +122,9 @@
 			</p>
 		</section>
 
-		<h2 class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">How it works</h2>
+		<h2 id="how-it-works" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">
+			How it works
+		</h2>
 		<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 			<p>
 				Each cell of a square lattice is either empty or holds an agent of one of two types.
@@ -148,7 +161,7 @@
 			</p>
 		</section>
 
-		<h2 class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Math</h2>
+		<h2 id="math" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Math</h2>
 		<section class="mt-4 space-y-5 leading-relaxed text-(--color-ink-muted)">
 			<p>
 				For an agent at lattice site <Math tex={'i'} /> with type
@@ -175,7 +188,7 @@
 			/>
 		</section>
 
-		<h2 class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Source</h2>
+		<h2 id="source" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Source</h2>
 		<p class="mt-3 leading-relaxed text-(--color-ink-muted)">
 			The engine is a single file in both TypeScript and Python. The browser simulation runs the
 			TypeScript version. The Python version is the validation reference. They produce the same
@@ -202,12 +215,14 @@
 			/>
 		</div>
 
-		<h2 class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">References</h2>
+		<h2 id="references" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">
+			References
+		</h2>
 		<div class="mt-4">
 			<CitationBlock {citation} />
 		</div>
 
-		<div class="mt-14 space-y-12">
+		<div id="cite" class="mt-14 space-y-12">
 			<CiteBlock title="Cite the original work" plain={originalPlain} bibtex={originalBibtex} />
 			<CiteBlock title="Cite this page" plain={pagePlain} bibtex={pageBibtex} />
 		</div>
