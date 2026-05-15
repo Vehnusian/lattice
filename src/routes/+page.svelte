@@ -9,11 +9,15 @@
 
 	let active = $state<Filter>('all');
 	let query = $state('');
+	let liveOnly = $state(false);
+
+	const liveCount = registry.filter((m) => m.status === 'published').length;
 
 	const filtered = $derived.by(() => {
-		const searched = searchModels(query);
-		if (active === 'all') return searched;
-		return searched.filter((m) => m.discipline === active);
+		let result = searchModels(query);
+		if (active !== 'all') result = result.filter((m) => m.discipline === active);
+		if (liveOnly) result = result.filter((m) => m.status === 'published');
+		return result;
 	});
 </script>
 
@@ -32,8 +36,24 @@
 		</p>
 	</section>
 
-	<div class="mt-16">
-		<SearchBar value={query} onChange={(v) => (query = v)} />
+	<div class="mt-16 flex flex-col gap-3 sm:flex-row sm:items-center">
+		<div class="flex-1">
+			<SearchBar value={query} onChange={(v) => (query = v)} />
+		</div>
+		<button
+			type="button"
+			onclick={() => (liveOnly = !liveOnly)}
+			class="live-toggle flex items-center gap-2 self-stretch border px-4 py-2.5 font-mono text-xs uppercase tracking-wider transition-colors"
+			style={liveOnly
+				? 'background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); border-radius: var(--radius-md);'
+				: 'background: var(--color-paper-2); color: var(--color-ink-muted); border-color: var(--color-rule); border-radius: var(--radius-md);'}
+		>
+			<span
+				class="h-1.5 w-1.5 rounded-full"
+				style={liveOnly ? 'background: var(--color-accent);' : 'background: var(--color-ink-subtle);'}
+			></span>
+			Live ({liveCount})
+		</button>
 	</div>
 
 	<div class="mt-6">
@@ -59,3 +79,9 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.live-toggle:hover {
+		border-color: var(--color-ink) !important;
+	}
+</style>

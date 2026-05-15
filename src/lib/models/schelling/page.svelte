@@ -131,12 +131,12 @@
 				<LiveValue source="segregation" format={(v) => v.toFixed(3)} />.
 			</p>
 			<p>
-				The model has one canonical finding. Even mild preferences (around
-				<Math tex={'\\tau = 1/3'} />) drive the system to sharply segregated configurations.
-				Below roughly <Math tex={'\\tau = 0.2'} /> the system stays mixed. Above
-				<Math tex={'\\tau = 0.5'} /> segregation is extreme. At very high density the system
-				gridlocks because there are too few empty cells for unsatisfied agents to move into.
-				The presets to the right select these regimes.
+				Schelling's qualitative finding is that the threshold needed for segregation is much
+				lower than intuition suggests. Sayama's example uses <Math tex={'\\tau = 0.5'} /> and
+				shows clear segregation. Below roughly <Math tex={'\\tau = 0.2'} /> the system stays
+				mixed. At very high density the system does not settle: agents keep moving because
+				each relocation makes some other agent unhappy. The presets to the right select
+				these regimes.
 			</p>
 		</section>
 

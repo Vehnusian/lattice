@@ -6,28 +6,27 @@ export const defaultParams = {
 	tolerance: 0.4
 };
 
-// Illustrative regimes of the model. The τ ≈ 1/3 case is the most cited
-// result: even mild preference produces sharp segregation. Below ~0.2 the
-// system stays mixed; above ~0.5 segregation is extreme. At very high
-// density the system gridlocks.
+// Illustrative regimes. Sayama uses th = 0.5 in his example and notes that
+// the critical threshold can be much lower than intuition suggests. At very
+// high density the system enters a non-stationary mixed state.
 export const presets = [
 	{
-		label: "Schelling's case (τ = 1/3)",
-		summary: 'τ 0.33 · d 0.9',
-		params: { tolerance: 0.33, density: 0.9 }
-	},
-	{
-		label: 'Below threshold (no segregation)',
-		summary: 'τ 0.15 · d 0.9',
-		params: { tolerance: 0.15, density: 0.9 }
-	},
-	{
-		label: 'Strong preference (extreme segregation)',
+		label: 'Strong preference',
 		summary: 'τ 0.5 · d 0.9',
 		params: { tolerance: 0.5, density: 0.9 }
 	},
 	{
-		label: 'Gridlock (high density)',
+		label: 'Mild preference',
+		summary: 'τ 0.33 · d 0.9',
+		params: { tolerance: 0.33, density: 0.9 }
+	},
+	{
+		label: 'Mixed',
+		summary: 'τ 0.15 · d 0.9',
+		params: { tolerance: 0.15, density: 0.9 }
+	},
+	{
+		label: 'Perpetual motion',
 		summary: 'τ 0.5 · d 0.98',
 		params: { tolerance: 0.5, density: 0.98 }
 	}
@@ -38,7 +37,7 @@ export const citation: Citation = {
 		'Schelling, T. C. (1971). Dynamic Models of Segregation. Journal of Mathematical Sociology, 1, 143–186.',
 	paperUrl: 'https://doi.org/10.1080/0022250X.1971.9989794',
 	textbook:
-		'Sayama, H. (2015). Introduction to the Modeling and Analysis of Complex Systems. Open SUNY Textbooks.',
+		'Sayama, H. (2015). Introduction to the Modeling and Analysis of Complex Systems. Open SUNY Textbooks, §19.2.',
 	textbookUrl: 'https://open.umn.edu/opentextbooks/textbooks/233',
 	freeRef: 'Wilensky, U. (1997). NetLogo Models Library: Segregation.',
 	freeRefUrl: 'https://ccl.northwestern.edu/netlogo/models/Segregation'
