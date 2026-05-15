@@ -38,20 +38,21 @@ export class Schelling {
 		}
 	}
 
-	step(): void {
+	step(): boolean {
 		const unsatisfied = this.findUnsatisfied();
-		if (unsatisfied.length === 0) return;
+		if (unsatisfied.length === 0) return false;
 
 		const empties: number[] = [];
 		for (let i = 0; i < this.grid.length; i++) {
 			if (this.grid[i] === 0) empties.push(i);
 		}
-		if (empties.length === 0) return;
+		if (empties.length === 0) return false;
 
 		const agent = unsatisfied[Math.floor(this.rng() * unsatisfied.length)];
 		const target = empties[Math.floor(this.rng() * empties.length)];
 		this.grid[target] = this.grid[agent];
 		this.grid[agent] = 0;
+		return true;
 	}
 
 	reset(seed: number): void {

@@ -30,10 +30,12 @@ class Schelling:
                 else:
                     self.grid[y][x] = 0
 
-    def step(self) -> None:
+    def step(self) -> bool:
+        """Perform one move. Returns True if an agent relocated, False if the
+        system is settled (no unsatisfied agents) or has no empty cells."""
         unsatisfied = self._find_unsatisfied()
         if not unsatisfied:
-            return
+            return False
         empties = [
             (x, y)
             for y in range(self.size)
@@ -41,11 +43,12 @@ class Schelling:
             if self.grid[y][x] == 0
         ]
         if not empties:
-            return
+            return False
         ax, ay = self.rng.choice(unsatisfied)
         tx, ty = self.rng.choice(empties)
         self.grid[ty][tx] = self.grid[ay][ax]
         self.grid[ay][ax] = 0
+        return True
 
     def reset(self, seed: int) -> None:
         self.rng = random.Random(seed)

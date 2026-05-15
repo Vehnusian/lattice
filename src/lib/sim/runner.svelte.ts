@@ -2,7 +2,7 @@ import { getContext, setContext } from 'svelte';
 
 export interface SimEngine<TParams extends Record<string, number>, TMetrics extends Record<string, number>> {
 	params: TParams;
-	step(): void;
+	step(): boolean;
 	reset(seed: number): void;
 	metrics(): TMetrics;
 }
@@ -22,6 +22,7 @@ export class SimRunner<
 
 	tick = $state(0);
 	playing = $state(false);
+	settled = $state(false);
 	speed = $state(1);
 	metrics = $state<TMetrics>({} as TMetrics);
 	params = $state<TParams>({} as TParams);
@@ -46,11 +47,22 @@ export class SimRunner<
 	}
 
 	step(): void {
+		if (this.settled) return;
 		const n = Math.max(1, Math.round(this.stepsPerTick * this.speed));
-		for (let i = 0; i < n; i++) this.engine.step();
-		this.tick += n;
-		this.syncMetrics();
-		this.appendHistory();
+		let work = 0;
+		for (let i = 0; i < n; i++) {
+			if (!this.engine.step()) break;
+			work++;
+		}
+		if (work > 0) {
+			this.tick += work;
+			this.syncMetrics();
+			this.appendHistory();
+		}
+		if (work < n) {
+			this.settled = true;
+			this.pause();
+		}
 	}
 
 	play(): void {
@@ -71,6 +83,7 @@ export class SimRunner<
 
 	reset(seed = Date.now() & 0xffffffff): void {
 		this.pause();
+		this.settled = false;
 		Object.assign(this.engine.params, this.params);
 		this.engine.reset(seed);
 		this.tick = 0;
@@ -81,6 +94,7 @@ export class SimRunner<
 	setParam<K extends keyof TParams>(key: K, value: TParams[K]): void {
 		this.params[key] = value;
 		this.engine.params[key] = value;
+		this.settled = false;
 	}
 
 	setParams(values: Partial<TParams>): void {

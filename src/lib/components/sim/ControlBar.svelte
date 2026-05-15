@@ -66,9 +66,14 @@
 		{/each}
 	</div>
 
-	<span class="ml-auto font-mono text-xs tabular-nums text-(--color-ink)">
-		<span class="text-(--color-ink-subtle)">t =</span>
-		{runner.tick.toLocaleString()}
+	<span class="ml-auto flex items-center gap-3 font-mono text-xs tabular-nums">
+		{#if runner.settled}
+			<span class="text-(--color-accent) uppercase tracking-wider">settled</span>
+		{/if}
+		<span class="text-(--color-ink)">
+			<span class="text-(--color-ink-subtle)">t =</span>
+			{runner.tick.toLocaleString()}
+		</span>
 	</span>
 </div>
 
