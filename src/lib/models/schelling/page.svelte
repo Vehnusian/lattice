@@ -11,7 +11,8 @@
 		pageBibtex,
 		pagePlain
 	} from './content';
-	import engineSource from './engine.ts?raw';
+	import engineTs from './engine.ts?raw';
+	import enginePy from './engine.py?raw';
 	import { SimRunner, provideRunner } from '$lib/sim/runner.svelte';
 	import type { ModelEntry } from '$lib/models/registry';
 
@@ -155,14 +156,28 @@
 
 		<h2 class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Source</h2>
 		<p class="mt-3 leading-relaxed text-(--color-ink-muted)">
-			The engine is a single TypeScript file. Copy, adapt, or audit. The browser simulation runs
-			the same code shown below.
+			The engine is a single file in both TypeScript and Python. The browser simulation runs the
+			TypeScript version. The Python version is the validation reference. They produce the same
+			behavior on the same seeds.
 		</p>
 		<div class="mt-4">
 			<SourceView
-				source={engineSource}
-				filename="engine.ts"
-				repoUrl="https://github.com/Vehnusian/lattice/blob/main/src/lib/models/schelling/engine.ts"
+				tabs={[
+					{
+						label: 'TypeScript',
+						filename: 'engine.ts',
+						source: engineTs,
+						repoUrl:
+							'https://github.com/Vehnusian/lattice/blob/main/src/lib/models/schelling/engine.ts'
+					},
+					{
+						label: 'Python',
+						filename: 'engine.py',
+						source: enginePy,
+						repoUrl:
+							'https://github.com/Vehnusian/lattice/blob/main/src/lib/models/schelling/engine.py'
+					}
+				]}
 			/>
 		</div>
 
