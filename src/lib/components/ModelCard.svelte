@@ -9,15 +9,12 @@
 	let { model }: Props = $props();
 
 	const isLive = $derived(model.status === 'published');
-	const href = $derived(isLive ? `/models/${model.slug}` : '#');
+	const href = $derived(`/models/${model.slug}`);
 </script>
 
 <a
 	class="group block border-(--color-rule) hover:border-(--color-rule-strong) transition-colors duration-200"
-	class:cursor-default={!isLive}
-	class:pointer-events-none={!isLive}
 	{href}
-	aria-disabled={!isLive}
 >
 	<div class="aspect-[4/3] overflow-hidden border-b border-(--color-rule) bg-(--color-paper-2)">
 		<CardPreview discipline={model.discipline} animated={isLive} />

@@ -7,6 +7,7 @@ Working rules for engineering, validation, documentation, and design. Every rule
 ## Code & architecture
 
 1. Each model lives in `src/lib/models/<model>/`. The engine is a pure-TypeScript module exporting `step()`, `reset(seed)`, `getState()`. UI components import only this interface. No DOM access, no Svelte, no rendering inside the engine.
+1b. Engine code is the project's academic artifact. It is written as a textbook implementation — minimal abstraction, idiomatic, readable in a single sitting. Target under 100 lines per engine. A reader should be able to copy the file and adapt it to their own work. Performance optimizations and clever tricks live outside the engine.
 2. Every engine accepts a seeded PRNG (`mulberry32` or `seedrandom`) in its constructor. `Math.random()` is forbidden in model code. Reproducibility is non-negotiable.
 3. Fixed-timestep simulation, decoupled rendering. `requestAnimationFrame` calls `engine.step(dt)` N times per frame, then renders. Model dynamics never depend on frame rate.
 4. TypeScript strict mode. No `any`. Engine state types are exported and reused in tests.

@@ -59,7 +59,7 @@ export const registry: ModelEntry[] = [
 	{ slug: 'metapopulation', name: 'Metapopulation epidemic', tagline: 'Coupled SIR patches with mobility; threshold depends on the mobility network.', discipline: 'epidemics', status: 'planned' },
 	{ slug: 'vaccination', name: 'Vaccination strategies', tagline: 'Random vs targeted immunization on heterogeneous networks.', discipline: 'epidemics', status: 'planned' },
 
-	{ slug: 'schelling', name: 'Schelling segregation', tagline: 'Mild preference for like neighbors produces sharp segregation.', discipline: 'spatial', status: 'planned' },
+	{ slug: 'schelling', name: 'Schelling segregation', tagline: 'Mild preference for like neighbors produces sharp segregation.', discipline: 'spatial', status: 'published' },
 	{ slug: 'site-percolation', name: 'Site percolation (2D)', tagline: 'Occupy sites with probability p; spanning cluster appears at p_c.', discipline: 'spatial', status: 'planned' },
 	{ slug: 'bond-percolation', name: 'Bond percolation (2D)', tagline: 'Edge variant of percolation; same universality class.', discipline: 'spatial', status: 'planned' },
 	{ slug: 'predator-prey-lattice', name: 'Predator–prey lattice', tagline: 'Stochastic Lotka–Volterra on a grid; spatial coexistence and waves.', discipline: 'spatial', status: 'planned' },
