@@ -37,8 +37,27 @@ export default defineConfig(
 		}
 	},
 	{
-		// Override or add rule settings here, such as:
-		// 'svelte/button-has-type': 'error'
-		rules: {}
+		rules: {
+			// No base path is configured; resolve() adds noise for plain internal links.
+			'svelte/no-navigation-without-resolve': 'off',
+			// Slider/CanvasViewport intentionally sync external props into local state.
+			'svelte/prefer-writable-derived': 'off',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_'
+				}
+			]
+		}
+	},
+	{
+		// KaTeX renders LaTeX to trusted HTML; literal mustaches keep JS escapes explicit.
+		files: ['**/Math.svelte', '**/models/**/page.svelte'],
+		rules: {
+			'svelte/no-at-html-tags': 'off',
+			'svelte/no-useless-mustaches': 'off'
+		}
 	}
 );

@@ -5,10 +5,7 @@
 
 <header class="border-b border-(--color-rule)">
 	<div class="mx-auto flex max-w-(--max-w-page) items-baseline justify-between px-6 py-6">
-		<a
-			href="/"
-			class="text-(--color-ink) text-xl font-semibold tracking-tight hover:no-underline"
-		>
+		<a href="/" class="text-(--color-ink) text-xl font-semibold tracking-tight hover:no-underline">
 			lattice
 		</a>
 		<nav class="flex items-center gap-6 font-mono text-xs uppercase tracking-wider">

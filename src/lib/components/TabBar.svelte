@@ -13,11 +13,17 @@
 	let { tabs, active, onChange }: Props = $props();
 </script>
 
-<div class="flex flex-wrap items-center gap-1.5">
+<div
+	class="flex flex-wrap items-center gap-1.5"
+	role="tablist"
+	aria-label="Filter models by discipline"
+>
 	{#each tabs as tab (tab.id)}
 		{@const isActive = active === tab.id}
 		<button
 			type="button"
+			role="tab"
+			aria-selected={isActive}
 			onclick={() => onChange(tab.id)}
 			class="chip font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 transition-colors duration-150"
 			style={isActive

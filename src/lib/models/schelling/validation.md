@@ -29,15 +29,15 @@ Reproducibility:
 
 Tolerance sweep at density = 0.9 on a 25 × 25 grid, three seeds per tolerance (representative run, 2026-05-13):
 
-| τ | segregation mean | stdev | settled | regime |
-| --- | --- | --- | --- | --- |
-| 0.10 | 0.519 | 0.005 | 3/3 | mixed; only initial random clustering |
-| 0.20 | 0.573 | 0.023 | 3/3 | approaching the transition |
-| 0.30 | 0.753 | 0.028 | 3/3 | clear segregation begins |
-| 0.40 | 0.826 | 0.007 | 3/3 | strong clustering |
-| 0.50 | 0.867 | 0.022 | 3/3 | Sayama's example value |
-| 0.60 | 0.973 | 0.004 | 3/3 | near-complete segregation |
-| 0.70 | 0.988 | 0.006 | 2/3 | empty-cell buffers form; one run did not settle within 5000 steps |
+| τ    | segregation mean | stdev | settled | regime                                                            |
+| ---- | ---------------- | ----- | ------- | ----------------------------------------------------------------- |
+| 0.10 | 0.519            | 0.005 | 3/3     | mixed; only initial random clustering                             |
+| 0.20 | 0.573            | 0.023 | 3/3     | approaching the transition                                        |
+| 0.30 | 0.753            | 0.028 | 3/3     | clear segregation begins                                          |
+| 0.40 | 0.826            | 0.007 | 3/3     | strong clustering                                                 |
+| 0.50 | 0.867            | 0.022 | 3/3     | Sayama's example value                                            |
+| 0.60 | 0.973            | 0.004 | 3/3     | near-complete segregation                                         |
+| 0.70 | 0.988            | 0.006 | 2/3     | empty-cell buffers form; one run did not settle within 5000 steps |
 
 The qualitative findings:
 

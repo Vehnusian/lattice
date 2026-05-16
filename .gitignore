@@ -35,3 +35,6 @@ bench/results-*.json
 # Local working memory
 NOTES.md
 docs/model-workflow.md
+
+# Local Claude Code session config
+.claude/

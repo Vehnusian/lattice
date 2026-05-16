@@ -2,7 +2,7 @@
 	import { useRunner } from '$lib/sim/runner.svelte';
 
 	interface Props {
-		label: string;
+		label?: string;
 		min?: number;
 		max?: number;
 		format?: (v: number) => string;
@@ -33,14 +33,26 @@
 </script>
 
 <div>
-	<div class="flex items-baseline justify-between">
-		<span class="font-mono text-[10px] uppercase tracking-wider text-(--color-ink-muted)"
-			>{label}</span
-		>
-		<span class="font-mono text-xs tabular-nums text-(--color-ink)">{format(current)}</span>
-	</div>
-	<svg viewBox="0 0 {width} {height}" class="mt-2 w-full" preserveAspectRatio="none">
+	{#if label}
+		<div class="flex items-baseline justify-between">
+			<span class="font-mono text-[10px] uppercase tracking-wider text-(--color-ink-muted)"
+				>{label}</span
+			>
+			<span class="font-mono text-xs tabular-nums text-(--color-ink)">{format(current)}</span>
+		</div>
+	{:else}
+		<div class="flex items-baseline justify-end">
+			<span class="font-mono text-xs tabular-nums text-(--color-ink)">{format(current)}</span>
+		</div>
+	{/if}
+	<svg
+		viewBox="0 0 {width} {height}"
+		class="mt-2 w-full"
+		preserveAspectRatio="none"
+		role="img"
+		aria-label={label ?? 'metric history'}
+	>
 		<line x1="0" y1={height} x2={width} y2={height} stroke="var(--color-rule)" stroke-width="0.5" />
-		<polyline points={points} fill="none" stroke="var(--color-accent)" stroke-width="1.2" />
+		<polyline {points} fill="none" stroke="var(--color-accent)" stroke-width="1.2" />
 	</svg>
 </div>

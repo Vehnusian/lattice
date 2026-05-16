@@ -3,10 +3,9 @@
 
 	interface Props {
 		discipline: Discipline;
-		animated: boolean;
 	}
 
-	let { discipline, animated }: Props = $props();
+	let { discipline }: Props = $props();
 
 	const ink = 'var(--color-ink)';
 	const muted = 'var(--color-ink-muted)';
@@ -33,7 +32,7 @@
 		<circle cx="100" cy="60" r="5.5" fill={accent} />
 	{:else if discipline === 'epidemics'}
 		<g>
-			{#each Array(60) as _, i}
+			{#each Array(60) as _, i (i)}
 				{@const x = 20 + (i % 12) * 14}
 				{@const y = 20 + Math.floor(i / 12) * 22}
 				{@const c = i % 7 === 0 ? accent : i % 11 === 0 ? muted : ink}
@@ -42,13 +41,13 @@
 		</g>
 	{:else if discipline === 'spatial'}
 		<g>
-			{#each Array(150) as _, i}
+			{#each Array(150) as _, i (i)}
 				{@const col = i % 15}
 				{@const row = Math.floor(i / 15)}
 				{@const x = 10 + col * 12}
 				{@const y = 10 + row * 13}
-				{@const isA = (col + row * 3 + (col * row) % 5) % 2 === 0}
-				<rect x={x} y={y} width="9" height="9" fill={isA ? ink : accent} />
+				{@const isA = (col + row * 3 + ((col * row) % 5)) % 2 === 0}
+				<rect {x} {y} width="9" height="9" fill={isA ? ink : accent} />
 			{/each}
 		</g>
 	{:else if discipline === 'dynamics'}
@@ -59,7 +58,7 @@
 	{:else if discipline === 'synchronization'}
 		<g>
 			<circle cx="100" cy="75" r="48" fill="none" stroke={muted} stroke-width="0.7" />
-			{#each Array(12) as _, i}
+			{#each Array(12) as _, i (i)}
 				{@const angle = (i / 12) * Math.PI * 2 - Math.PI / 2}
 				{@const cluster = i % 4 < 3 ? 0 : 1}
 				{@const r = cluster === 0 ? 48 : 30}
@@ -70,7 +69,7 @@
 		</g>
 	{:else if discipline === 'criticality'}
 		<g>
-			{#each Array(40) as _, i}
+			{#each Array(40) as _, i (i)}
 				{@const seed = (i * 9301 + 49297) % 233280}
 				{@const x = ((seed * 7) % 180) + 10}
 				{@const y = ((seed * 13) % 130) + 10}
@@ -92,20 +91,20 @@
 		</g>
 	{:else if discipline === 'automata'}
 		<g>
-			{#each Array(225) as _, i}
+			{#each Array(225) as _, i (i)}
 				{@const col = i % 25}
 				{@const row = Math.floor(i / 25)}
 				{@const x = 5 + col * 7.6}
 				{@const y = 8 + row * 16}
 				{@const on = ((col + 12) ^ row) % 3 === 0}
 				{#if on}
-					<rect x={x} y={y} width="6" height="12" fill={ink} />
+					<rect {x} {y} width="6" height="12" fill={ink} />
 				{/if}
 			{/each}
 		</g>
 	{:else if discipline === 'morphogenesis'}
 		<g fill="none">
-			{#each Array(8) as _, i}
+			{#each Array(8) as _, i (i)}
 				{@const offset = i * 18}
 				<path
 					d={`M 0 ${20 + offset} Q 50 ${10 + offset}, 100 ${20 + offset} T 200 ${20 + offset}`}
@@ -116,28 +115,29 @@
 		</g>
 	{:else if discipline === 'econophysics'}
 		<g>
-			{#each Array(24) as _, i}
+			{#each Array(24) as _, i (i)}
 				{@const x = 12 + i * 7.5}
 				{@const h = 110 * Math.exp(-i / 6)}
 				{@const y = 130 - h}
-				<rect x={x} y={y} width="5" height={h} fill={i < 2 ? accent : ink} />
+				<rect {x} {y} width="5" height={h} fill={i < 2 ? accent : ink} />
 			{/each}
 			<line x1="10" y1="130" x2="190" y2="130" stroke={muted} stroke-width="0.6" />
 		</g>
 	{:else if discipline === 'opinion'}
 		<g>
-			{#each Array(100) as _, i}
+			{#each Array(100) as _, i (i)}
 				{@const col = i % 10}
 				{@const row = Math.floor(i / 10)}
 				{@const x = 20 + col * 16}
 				{@const y = 12 + row * 14}
-				{@const region = col < 5 && row < 5 ? 0 : col >= 5 && row < 5 ? 1 : col < 5 && row >= 5 ? 1 : 0}
+				{@const region =
+					col < 5 && row < 5 ? 0 : col >= 5 && row < 5 ? 1 : col < 5 && row >= 5 ? 1 : 0}
 				<circle cx={x} cy={y} r="3.5" fill={region === 0 ? ink : accent} />
 			{/each}
 		</g>
 	{:else if discipline === 'active'}
 		<g>
-			{#each Array(14) as _, i}
+			{#each Array(14) as _, i (i)}
 				{@const seed = (i * 9301 + 49297) % 233280}
 				{@const x = ((seed * 17) % 170) + 15}
 				{@const y = ((seed * 11) % 110) + 20}
@@ -166,7 +166,3 @@
 		</g>
 	{/if}
 </svg>
-
-{#if animated}
-	<!-- live preview hook for later -->
-{/if}

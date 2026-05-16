@@ -1,6 +1,9 @@
 import { getContext, setContext } from 'svelte';
 
-export interface SimEngine<TParams extends Record<string, number>, TMetrics extends Record<string, number>> {
+export interface SimEngine<
+	TParams extends Record<string, number>,
+	TMetrics extends Record<string, number>
+> {
 	params: TParams;
 	step(): boolean;
 	reset(seed: number): void;
@@ -19,6 +22,8 @@ export class SimRunner<
 	private engine: SimEngine<TParams, TMetrics>;
 	private raf = 0;
 	private stepsPerTick = 1;
+	private wantsToRun = false;
+	private visible = true;
 
 	tick = $state(0);
 	playing = $state(false);
@@ -66,19 +71,41 @@ export class SimRunner<
 	}
 
 	play(): void {
-		if (this.playing) return;
+		this.wantsToRun = true;
+		if (this.playing || !this.visible) return;
+		this.startLoop();
+	}
+
+	pause(): void {
+		this.wantsToRun = false;
+		this.playing = false;
+		if (this.raf) {
+			cancelAnimationFrame(this.raf);
+			this.raf = 0;
+		}
+	}
+
+	setVisible(v: boolean): void {
+		this.visible = v;
+		if (!v && this.playing) {
+			this.playing = false;
+			if (this.raf) {
+				cancelAnimationFrame(this.raf);
+				this.raf = 0;
+			}
+		} else if (v && this.wantsToRun && !this.playing && !this.settled) {
+			this.startLoop();
+		}
+	}
+
+	private startLoop(): void {
 		this.playing = true;
 		const loop = () => {
 			if (!this.playing) return;
 			this.step();
-			this.raf = requestAnimationFrame(loop);
+			if (this.playing) this.raf = requestAnimationFrame(loop);
 		};
 		this.raf = requestAnimationFrame(loop);
-	}
-
-	pause(): void {
-		this.playing = false;
-		if (this.raf) cancelAnimationFrame(this.raf);
 	}
 
 	reset(seed = Date.now() & 0xffffffff): void {

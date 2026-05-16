@@ -9,6 +9,7 @@ Brockmann's content model, executed with Distill's visual polish bar, with the i
 ## Audience
 
 University students through professors. People who:
+
 - Need to quickly grasp an unfamiliar model
 - Reference a known model while teaching or studying
 - Play with a model to build intuition

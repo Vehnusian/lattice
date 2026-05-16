@@ -22,6 +22,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>lattice — reference library of complex systems models</title>
+</svelte:head>
+
 <div class="hero-wrap">
 	<AmbientField />
 	<div class="relative mx-auto max-w-(--max-w-page) px-6 pt-20 pb-16">
@@ -29,7 +33,9 @@
 			<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">
 				Reference library
 			</p>
-			<h1 class="mt-3 text-4xl font-semibold tracking-tight text-(--color-ink) sm:text-5xl md:text-6xl">
+			<h1
+				class="mt-3 text-4xl font-semibold tracking-tight text-(--color-ink) sm:text-5xl md:text-6xl"
+			>
 				How simple rules<br />
 				produce complex behavior.
 			</h1>
@@ -42,7 +48,6 @@
 </div>
 
 <div class="mx-auto max-w-(--max-w-page) px-6 pt-4 pb-24">
-
 	<div class="mt-16 flex flex-col gap-3 sm:flex-row sm:items-center">
 		<div class="flex-1">
 			<SearchBar value={query} onChange={(v) => (query = v)} />
@@ -57,18 +62,20 @@
 		>
 			<span
 				class="h-1.5 w-1.5 rounded-full"
-				style={liveOnly ? 'background: var(--color-accent);' : 'background: var(--color-ink-subtle);'}
+				style={liveOnly
+					? 'background: var(--color-accent);'
+					: 'background: var(--color-ink-subtle);'}
 			></span>
 			Live ({liveCount})
 		</button>
 	</div>
 
 	<div class="mt-6">
-		<TabBar tabs={disciplines} active={active} onChange={(id) => (active = id as Filter)} />
+		<TabBar tabs={disciplines} {active} onChange={(id) => (active = id as Filter)} />
 	</div>
 
 	<div class="mt-6 flex items-center justify-between border-b border-(--color-rule) pb-3">
-		<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">
+		<p class="font-mono text-[10px] uppercase tracking-wider text-(--color-ink-subtle)">
 			{filtered.length} of {registry.length}
 		</p>
 	</div>
@@ -82,7 +89,9 @@
 	{#if filtered.length === 0}
 		<div class="mt-12 border border-(--color-rule) px-6 py-16 text-center">
 			<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">No matches</p>
-			<p class="mt-2 text-(--color-ink-muted)">Try a different search or pick another discipline.</p>
+			<p class="mt-2 text-(--color-ink-muted)">
+				Try a different search or pick another discipline.
+			</p>
 		</div>
 	{/if}
 </div>

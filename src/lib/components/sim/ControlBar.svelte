@@ -13,6 +13,7 @@
 		type="button"
 		onclick={() => (runner.playing ? runner.pause() : runner.play())}
 		aria-label={runner.playing ? 'Pause' : 'Play'}
+		aria-pressed={runner.playing}
 		class="icon-btn"
 	>
 		{#if runner.playing}
@@ -51,10 +52,17 @@
 
 	<span class="mx-2 h-6 w-px bg-(--color-rule)"></span>
 
-	<div class="flex items-center gap-0.5 font-mono text-xs">
+	<div
+		class="flex items-center gap-0.5 font-mono text-xs"
+		role="radiogroup"
+		aria-label="Simulation speed"
+	>
 		{#each speeds as s (s)}
 			<button
 				type="button"
+				role="radio"
+				aria-checked={runner.speed === s}
+				aria-label="{s}× speed"
 				onclick={() => (runner.speed = s)}
 				class="speed-btn"
 				style={runner.speed === s
@@ -86,7 +94,9 @@
 		height: 38px;
 		border-radius: 6px;
 		color: var(--color-ink-muted);
-		transition: color 0.15s, background 0.15s;
+		transition:
+			color 0.15s,
+			background 0.15s;
 	}
 
 	.icon-btn:hover {
@@ -97,7 +107,9 @@
 	.speed-btn {
 		padding: 6px 10px;
 		border-radius: 4px;
-		transition: color 0.15s, background 0.15s;
+		transition:
+			color 0.15s,
+			background 0.15s;
 		font-weight: 500;
 	}
 

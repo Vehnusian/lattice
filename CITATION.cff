@@ -1,10 +1,22 @@
 cff-version: 1.2.0
-message: "If you reference this library, please cite it as below."
-title: "lattice — reference library of complex systems models"
+message: 'If you reference this library, please cite it as below.'
+title: 'lattice — reference library of complex systems models'
+abstract: >-
+  A reference library of validated complex systems models. Each model page
+  presents an interactive simulation, the underlying math, a plain-language
+  explanation, and citations back to the source literature. Browser engines
+  are mirrored by Python reference implementations and validated against the
+  closed-form analytic results, where they exist.
 authors:
   - family-names: Khan
     given-names: Hashim
 type: software
 license: MIT
-url: "https://github.com/Vehnusian/lattice"
-repository-code: "https://github.com/Vehnusian/lattice"
+url: 'https://github.com/Vehnusian/lattice'
+repository-code: 'https://github.com/Vehnusian/lattice'
+keywords:
+  - complex systems
+  - agent-based models
+  - simulation
+  - educational software
+  - reproducibility

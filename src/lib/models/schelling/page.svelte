@@ -14,6 +14,7 @@
 	import engineTs from './engine.ts?raw';
 	import enginePy from './engine.py?raw';
 	import { SimRunner, provideRunner } from '$lib/sim/runner.svelte';
+	import { readColors } from '$lib/theme/tokens';
 	import type { ModelEntry } from '$lib/models/registry';
 
 	import ModelPageLayout from '$lib/components/ModelPageLayout.svelte';
@@ -32,7 +33,8 @@
 	let { model }: { model: ModelEntry } = $props();
 
 	const schelling = new Schelling(defaultParams, 1);
-	const colors = { bg: '#F3EFE5', a: '#161513', b: '#B5450B' };
+	const palette = readColors();
+	const colors = { bg: palette['paper-2'], a: palette.ink, b: palette.accent };
 
 	const runner = new SimRunner(schelling, 'segregation');
 	provideRunner(runner);
@@ -46,7 +48,12 @@
 
 <ModelPageLayout {model}>
 	{#snippet sim()}
-		<CanvasViewport {draw} tick={runner.tick} />
+		<CanvasViewport
+			{draw}
+			tick={runner.tick}
+			label="Schelling segregation grid — two agent types on a square lattice"
+			onVisibilityChange={(v) => runner.setVisible(v)}
+		/>
 	{/snippet}
 
 	{#snippet controls()}
@@ -72,26 +79,17 @@
 				/>
 			</ParamPanel>
 
-			<div
-				class="border border-(--color-rule) bg-(--color-paper-2) p-4"
-				style="border-radius: var(--radius-md);"
-			>
-				<p class="mb-3 font-mono text-[10px] uppercase tracking-wider text-(--color-ink-subtle)">
-					Presets
-				</p>
+			<ParamPanel title="Presets">
 				<div class="space-y-2">
 					{#each presets as preset (preset.label)}
 						<Preset params={preset.params} summary={preset.summary}>{preset.label}</Preset>
 					{/each}
 				</div>
-			</div>
+			</ParamPanel>
 
-			<div
-				class="border border-(--color-rule) bg-(--color-paper-2) p-4"
-				style="border-radius: var(--radius-md);"
-			>
-				<MetricPlot label="Segregation index" min={0} max={1} format={(v) => v.toFixed(3)} />
-			</div>
+			<ParamPanel title="Segregation index">
+				<MetricPlot min={0} max={1} format={(v) => v.toFixed(3)} />
+			</ParamPanel>
 		</div>
 	{/snippet}
 
@@ -101,15 +99,15 @@
 		</h2>
 		<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 			<p>
-				Thomas Schelling's 1971 segregation model is one of the earliest demonstrations that
-				strong collective outcomes can arise from mild individual preferences. Two kinds of
-				agents occupy a grid. None require a majority of like neighbors. None coordinate. Yet
-				the system reliably settles into sharply segregated neighborhoods.
+				Thomas Schelling's 1971 segregation model is one of the earliest demonstrations that strong
+				collective outcomes can arise from mild individual preferences. Two kinds of agents occupy a
+				grid. None require a majority of like neighbors. None coordinate. Yet the system reliably
+				settles into sharply segregated neighborhoods.
 			</p>
 			<p>
-				The model is short, almost trivial. Its consequence, that visible segregation does not
-				imply strong individual prejudice, has been cited in fields ranging from urban
-				sociology to physics.
+				The model is short, almost trivial. Its consequence, that visible segregation does not imply
+				strong individual prejudice, has been cited in fields ranging from urban sociology to
+				physics.
 			</p>
 		</section>
 
@@ -118,37 +116,35 @@
 		</h2>
 		<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 			<p>
-				Each cell of a square lattice is either empty or holds an agent of one of two types.
-				Two parameters control the system. The density <Math tex={'d'} /> is the fraction of
-				cells that start occupied. The tolerance <Math tex={'\\tau'} /> is the minimum
-				fraction of like-type neighbors an agent requires to remain in place.
+				Each cell of a square lattice is either empty or holds an agent of one of two types. Two
+				parameters control the system. The density <Math tex={'d'} /> is the fraction of cells that start
+				occupied. The tolerance <Math tex={'\\tau'} /> is the minimum fraction of like-type neighbors
+				an agent requires to remain in place.
 			</p>
 			<p>
 				At each step, one unsatisfied agent relocates to a random empty cell. An agent is
-				unsatisfied when the fraction of its same-type neighbors, counted over the Moore
-				eight-cell neighborhood, falls below <Math tex={'\\tau'} />.
+				unsatisfied when the fraction of its same-type neighbors, counted over the Moore eight-cell
+				neighborhood, falls below <Math tex={'\\tau'} />.
 			</p>
 			<p>
 				The system currently holds <LiveValue source="agents" /> agents, of which
-				<LiveValue source="unsatisfied" /> are unsatisfied. The segregation index, the mean
-				fraction of like-type neighbors over all occupied cells, is
+				<LiveValue source="unsatisfied" /> are unsatisfied. The segregation index, the mean fraction of
+				like-type neighbors over all occupied cells, is
 				<LiveValue source="segregation" format={(v) => v.toFixed(3)} />.
 			</p>
 			<p>
-				Schelling's qualitative finding is that the threshold needed for segregation is much
-				lower than intuition suggests. Sayama's example uses <Math tex={'\\tau = 0.5'} /> and
-				shows clear segregation. Below roughly <Math tex={'\\tau = 0.2'} /> the system stays
-				mixed. Different applications use different <Math tex={'\\tau'} /> values: residential
-				segregation studies typically use 0.3 to 0.5; models of strong in-group identity or
-				territorial behavior use 0.6 and above.
+				Schelling's qualitative finding is that the threshold needed for segregation is much lower
+				than intuition suggests. Sayama's example uses <Math tex={'\\tau = 0.5'} /> and shows clear segregation.
+				Below roughly <Math tex={'\\tau = 0.2'} /> the system stays mixed. Different applications use
+				different <Math tex={'\\tau'} /> values: residential segregation studies typically use 0.3 to
+				0.5; models of strong in-group identity or territorial behavior use 0.6 and above.
 			</p>
 			<p>
-				At very high <Math tex={'\\tau'} /> (high homophily) the system still settles, but it
-				does so by forming thick empty-cell boundaries between clusters. Empty cells do not
-				count toward an agent's satisfaction, so a wide enough empty buffer lets even
-				boundary agents see only same-type occupied neighbors. The result is unusually sharp
-				separation with prominent empty moats around each cluster. The presets to the right
-				select these regimes.
+				At very high <Math tex={'\\tau'} /> (high homophily) the system still settles, but it does so
+				by forming thick empty-cell boundaries between clusters. Empty cells do not count toward an agent's
+				satisfaction, so a wide enough empty buffer lets even boundary agents see only same-type occupied
+				neighbors. The result is unusually sharp separation with prominent empty moats around each cluster.
+				The presets in the sidebar select these regimes.
 			</p>
 		</section>
 
@@ -156,8 +152,8 @@
 		<section class="mt-4 space-y-5 leading-relaxed text-(--color-ink-muted)">
 			<p>
 				For an agent at lattice site <Math tex={'i'} /> with type
-				<Math tex={'t_i \\in \\{1, 2\\}'} />, let <Math tex={'N(i)'} /> denote the set of
-				occupied Moore neighbors and <Math tex={'S(i) \\subseteq N(i)'} /> those that share
+				<Math tex={'t_i \\in \\{1, 2\\}'} />, let <Math tex={'N(i)'} /> denote the set of occupied Moore
+				neighbors and <Math tex={'S(i) \\subseteq N(i)'} /> those that share
 				<Math tex={'t_i'} />. The like-fraction is
 			</p>
 			<Math
@@ -166,8 +162,8 @@
 			/>
 			<p>
 				The agent is unsatisfied when <Math tex={'L(i) < \\tau'} />, where
-				<Math tex={'\\tau'} /> is the tolerance. At each step, a uniformly random unsatisfied
-				agent relocates to a uniformly random empty cell.
+				<Math tex={'\\tau'} /> is the tolerance. At each step, a uniformly random unsatisfied agent relocates
+				to a uniformly random empty cell.
 			</p>
 			<p>
 				The segregation index displayed in the metric plot is the mean of
@@ -179,7 +175,9 @@
 			/>
 		</section>
 
-		<h2 id="source" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">Source</h2>
+		<h2 id="source" class="mt-14 text-2xl font-semibold tracking-tight text-(--color-ink)">
+			Source
+		</h2>
 		<p class="mt-3 leading-relaxed text-(--color-ink-muted)">
 			The engine is a single file in both TypeScript and Python. The browser simulation runs the
 			TypeScript version. The Python version is the validation reference. They produce the same

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+
 	interface Props {
 		label: string;
 		value: number;
@@ -21,7 +23,7 @@
 		onCommit
 	}: Props = $props();
 
-	let local = $state(value);
+	let local = $state(untrack(() => value));
 
 	$effect(() => {
 		local = value;
@@ -91,7 +93,9 @@
 		margin-top: -7px;
 		cursor: grab;
 		box-shadow: 0 0 0 2px var(--color-paper);
-		transition: background 0.12s, transform 0.08s;
+		transition:
+			background 0.12s,
+			transform 0.08s;
 	}
 
 	.slider::-moz-range-thumb {

@@ -11,6 +11,7 @@ import { mulberry32 } from '$lib/sim/rng';
 export type Cell = 0 | 1 | 2; // 0 = empty, 1 = type A, 2 = type B
 
 export interface SchellingParams {
+	[key: string]: number;
 	size: number;
 	density: number;
 	tolerance: number;
@@ -21,7 +22,10 @@ export class Schelling {
 	private rng: () => number;
 	private seed: number;
 
-	constructor(public params: SchellingParams, seed = 1) {
+	constructor(
+		public params: SchellingParams,
+		seed = 1
+	) {
 		this.seed = seed;
 		this.rng = mulberry32(seed);
 		this.grid = new Uint8Array(params.size * params.size);

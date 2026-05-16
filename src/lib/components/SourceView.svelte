@@ -76,11 +76,7 @@
 				>
 					<span>{active.filename}</span>
 					{#if active.repoUrl}
-						<a
-							href={active.repoUrl}
-							rel="noopener external"
-							class="hover:text-(--color-ink)"
-						>
+						<a href={active.repoUrl} rel="noopener external" class="hover:text-(--color-ink)">
 							github
 						</a>
 					{/if}
@@ -89,7 +85,9 @@
 					</button>
 				</div>
 			</div>
-			<pre class="overflow-x-auto px-4 py-3 text-sm leading-relaxed text-(--color-ink)"><code>{active.source}</code></pre>
+			<pre class="overflow-x-auto px-4 py-3 text-sm leading-relaxed text-(--color-ink)"><code
+					>{active.source}</code
+				></pre>
 		</div>
 	{/if}
 </div>
@@ -97,7 +95,9 @@
 <style>
 	.lang-tab {
 		border-radius: 4px;
-		transition: color 0.15s, background 0.15s;
+		transition:
+			color 0.15s,
+			background 0.15s;
 	}
 
 	.lang-tab:hover {

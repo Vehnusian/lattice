@@ -5,9 +5,17 @@
 		draw: (ctx: CanvasRenderingContext2D) => void;
 		tick: number;
 		aspect?: number;
+		label?: string;
+		onVisibilityChange?: (visible: boolean) => void;
 	}
 
-	let { draw, tick, aspect = 1 }: Props = $props();
+	let {
+		draw,
+		tick,
+		aspect = 1,
+		label = 'Simulation viewport',
+		onVisibilityChange
+	}: Props = $props();
 	let canvas: HTMLCanvasElement;
 	let wrap: HTMLDivElement;
 
@@ -36,16 +44,30 @@
 		resize();
 		const ro = new ResizeObserver(resize);
 		ro.observe(wrap);
-		return () => ro.disconnect();
+
+		let io: IntersectionObserver | null = null;
+		if (onVisibilityChange) {
+			io = new IntersectionObserver(
+				(entries) => {
+					onVisibilityChange?.(entries.some((e) => e.isIntersecting));
+				},
+				{ threshold: 0 }
+			);
+			io.observe(wrap);
+		}
+
+		return () => {
+			ro.disconnect();
+			io?.disconnect();
+		};
 	});
 
 	$effect(() => {
-		// re-render when tick changes
-		tick;
+		void tick;
 		render();
 	});
 </script>
 
 <div bind:this={wrap} class="w-full">
-	<canvas bind:this={canvas} class="block bg-(--color-paper-2)"></canvas>
+	<canvas bind:this={canvas} class="block bg-(--color-paper-2)" aria-label={label}></canvas>
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { createNoise3D } from 'simplex-noise';
+	import { readColors } from '$lib/theme/tokens';
 
 	let canvas: HTMLCanvasElement;
 	let wrap: HTMLDivElement;
@@ -14,19 +15,44 @@
 	const ANGLE_RANGE = Math.PI * 2.4;
 	const STROKE = 1;
 	const STROKE_ALPHA = 0.08;
-	const TRAIL_FADE = 'rgba(249, 246, 240, 0.008)';
 
-	// Color pairs drawn strictly from the site palette: ink, muted ink,
-	// accent ochre, and the deeper accent-hover. Strokes use multiply
-	// blending so layered alpha builds toward saturated warmth without
-	// importing colors that don't belong on the rest of the site.
-	const colorPairs: { from: [number, number, number]; to: [number, number, number] }[] = [
-		{ from: [22, 21, 19], to: [181, 69, 11] },     // ink → accent
-		{ from: [181, 69, 11], to: [151, 56, 8] },     // accent → accent-hover
-		{ from: [94, 90, 82], to: [181, 69, 11] },     // ink-muted → accent
-		{ from: [22, 21, 19], to: [94, 90, 82] },      // ink → ink-muted
-		{ from: [151, 56, 8], to: [22, 21, 19] }       // accent-hover → ink
-	];
+	type RGB = [number, number, number];
+
+	function parseColor(value: string): RGB {
+		const v = value.trim();
+		if (v.startsWith('#')) {
+			const h = v.slice(1);
+			const full = h.length === 3 ? [...h].map((c) => c + c).join('') : h;
+			const n = parseInt(full, 16);
+			return [(n >> 16) & 0xff, (n >> 8) & 0xff, n & 0xff];
+		}
+		const match = v.match(/\d+(\.\d+)?/g);
+		if (match && match.length >= 3) {
+			return [parseInt(match[0]), parseInt(match[1]), parseInt(match[2])];
+		}
+		return [0, 0, 0];
+	}
+
+	let paperRGB: RGB = [249, 246, 240];
+	let trailFade = 'rgba(249, 246, 240, 0.008)';
+	let colorPairs: { from: RGB; to: RGB }[] = [];
+
+	function buildPalette() {
+		const c = readColors();
+		const ink = parseColor(c.ink);
+		const accent = parseColor(c.accent);
+		const accentHover = parseColor(c['accent-hover']);
+		const inkMuted = parseColor(c['ink-muted']);
+		paperRGB = parseColor(c.paper);
+		trailFade = `rgba(${paperRGB[0]}, ${paperRGB[1]}, ${paperRGB[2]}, 0.008)`;
+		colorPairs = [
+			{ from: ink, to: accent },
+			{ from: accent, to: accentHover },
+			{ from: inkMuted, to: accent },
+			{ from: ink, to: inkMuted },
+			{ from: accentHover, to: ink }
+		];
+	}
 
 	interface Particle {
 		x: number;
@@ -93,7 +119,7 @@
 		const ctx = canvas.getContext('2d');
 		if (ctx) {
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-			ctx.fillStyle = '#F9F6F0';
+			ctx.fillStyle = `rgb(${paperRGB[0]}, ${paperRGB[1]}, ${paperRGB[2]})`;
 			ctx.fillRect(0, 0, W, H);
 		}
 		initParticles();
@@ -110,13 +136,7 @@
 			p.x += Math.cos(angle) * SPEED;
 			p.y += Math.sin(angle) * SPEED;
 			p.age += 1;
-			if (
-				p.age > p.life ||
-				p.x < -10 ||
-				p.x > W + 10 ||
-				p.y < -10 ||
-				p.y > H + 10
-			) {
+			if (p.age > p.life || p.x < -10 || p.x > W + 10 || p.y < -10 || p.y > H + 10) {
 				resetParticle(p);
 			}
 		}
@@ -132,7 +152,7 @@
 
 		// Fade existing pixels toward paper with normal blending
 		ctx.globalCompositeOperation = 'source-over';
-		ctx.fillStyle = TRAIL_FADE;
+		ctx.fillStyle = trailFade;
 		ctx.fillRect(0, 0, W, H);
 
 		// Strokes use multiply so layers darken-with-hue instead of graying out
@@ -156,31 +176,69 @@
 		ctx.globalCompositeOperation = 'source-over';
 	}
 
+	let visible = true;
+	let paused = false;
+
 	function loop() {
-		if (stopped) return;
+		if (stopped || paused) {
+			raf = 0;
+			return;
+		}
 		step();
 		render();
 		raf = requestAnimationFrame(loop);
 	}
 
+	function startLoop() {
+		if (raf || stopped || paused) return;
+		raf = requestAnimationFrame(loop);
+	}
+
+	function warmUp(remaining: number) {
+		if (stopped) return;
+		const chunk = Math.min(remaining, 120);
+		for (let i = 0; i < chunk; i++) {
+			step();
+			render();
+		}
+		const left = remaining - chunk;
+		if (left > 0) {
+			setTimeout(() => warmUp(left), 0);
+		} else if (visible) {
+			startLoop();
+		}
+	}
+
 	onMount(() => {
+		buildPalette();
 		noise = createNoise3D();
 		resize();
 		const ro = new ResizeObserver(resize);
 		ro.observe(wrap);
 
+		const io = new IntersectionObserver(
+			(entries) => {
+				visible = entries.some((e) => e.isIntersecting);
+				if (visible) startLoop();
+				else if (raf) {
+					cancelAnimationFrame(raf);
+					raf = 0;
+				}
+			},
+			{ threshold: 0 }
+		);
+		io.observe(wrap);
+
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (!reduced) {
-			for (let i = 0; i < 1500; i++) {
-				step();
-				render();
-			}
-			raf = requestAnimationFrame(loop);
+		const hidden = wrap.offsetWidth === 0 || wrap.offsetHeight === 0;
+		if (!reduced && !hidden) {
+			setTimeout(() => warmUp(1500), 0);
 		}
 
 		return () => {
 			stopped = true;
 			ro.disconnect();
+			io.disconnect();
 		};
 	});
 
@@ -201,6 +259,7 @@
 		overflow: hidden;
 		pointer-events: none;
 		z-index: 0;
+		display: none;
 		mask-image: linear-gradient(
 			to right,
 			transparent 0%,
@@ -217,6 +276,12 @@
 			black 96%,
 			transparent 100%
 		);
+	}
+
+	@media (min-width: 768px) {
+		.ambient {
+			display: block;
+		}
 	}
 
 	canvas {
