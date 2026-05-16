@@ -177,10 +177,10 @@
 	}
 
 	let visible = true;
-	let paused = false;
+	let allowAnimation = false;
 
 	function loop() {
-		if (stopped || paused) {
+		if (stopped) {
 			raf = 0;
 			return;
 		}
@@ -190,23 +190,8 @@
 	}
 
 	function startLoop() {
-		if (raf || stopped || paused) return;
+		if (raf || stopped || !allowAnimation || !visible) return;
 		raf = requestAnimationFrame(loop);
-	}
-
-	function warmUp(remaining: number) {
-		if (stopped) return;
-		const chunk = Math.min(remaining, 120);
-		for (let i = 0; i < chunk; i++) {
-			step();
-			render();
-		}
-		const left = remaining - chunk;
-		if (left > 0) {
-			setTimeout(() => warmUp(left), 0);
-		} else if (visible) {
-			startLoop();
-		}
 	}
 
 	onMount(() => {
@@ -231,9 +216,8 @@
 
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const hidden = wrap.offsetWidth === 0 || wrap.offsetHeight === 0;
-		if (!reduced && !hidden) {
-			setTimeout(() => warmUp(1500), 0);
-		}
+		allowAnimation = !reduced && !hidden;
+		if (allowAnimation) startLoop();
 
 		return () => {
 			stopped = true;
