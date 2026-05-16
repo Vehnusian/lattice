@@ -243,28 +243,40 @@
 		overflow: hidden;
 		pointer-events: none;
 		z-index: 0;
-		display: none;
 		mask-image: linear-gradient(
-			to right,
+			to bottom,
 			transparent 0%,
-			transparent 35%,
-			black 55%,
-			black 96%,
-			transparent 100%
+			transparent 45%,
+			black 80%,
+			black 100%
 		);
 		-webkit-mask-image: linear-gradient(
-			to right,
+			to bottom,
 			transparent 0%,
-			transparent 35%,
-			black 55%,
-			black 96%,
-			transparent 100%
+			transparent 45%,
+			black 80%,
+			black 100%
 		);
 	}
 
 	@media (min-width: 768px) {
 		.ambient {
-			display: block;
+			mask-image: linear-gradient(
+				to right,
+				transparent 0%,
+				transparent 35%,
+				black 55%,
+				black 96%,
+				transparent 100%
+			);
+			-webkit-mask-image: linear-gradient(
+				to right,
+				transparent 0%,
+				transparent 35%,
+				black 55%,
+				black 96%,
+				transparent 100%
+			);
 		}
 	}
 
