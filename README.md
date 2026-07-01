@@ -8,6 +8,8 @@ A reference library of validated complex systems models. Every model gets an int
 [![check](https://github.com/Vehnusian/lattice/actions/workflows/check.yml/badge.svg)](https://github.com/Vehnusian/lattice/actions/workflows/check.yml)
 [![license: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue?style=flat-square)](LICENSE)
 
+[![lattice home page](media/homepage.png)](https://lattice-gray-one.vercel.app)
+
 ## What it is
 
 Segregation, epidemics, networks, cellular automata, criticality, synchronization: the canonical models of complex systems are scattered across decades of papers, textbooks, and one-off demos. Lattice collects them in one place, with the same layout on every page, so learning one page teaches you where to find things on all the others.
