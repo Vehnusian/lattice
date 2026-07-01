@@ -22,7 +22,7 @@
 		</dt>
 		<dd class="mt-1 text-(--color-ink-muted)">
 			{#if citation.paperUrl}
-				<a href={citation.paperUrl} rel="noopener external">{citation.paper}</a>
+				<a href={citation.paperUrl} target="_blank" rel="noopener noreferrer">{citation.paper}</a>
 			{:else}
 				{citation.paper}
 			{/if}
@@ -35,7 +35,9 @@
 		</dt>
 		<dd class="mt-1 text-(--color-ink-muted)">
 			{#if citation.textbookUrl}
-				<a href={citation.textbookUrl} rel="noopener external">{citation.textbook}</a>
+				<a href={citation.textbookUrl} target="_blank" rel="noopener noreferrer"
+					>{citation.textbook}</a
+				>
 			{:else}
 				{citation.textbook}
 			{/if}
@@ -49,7 +51,9 @@
 			</dt>
 			<dd class="mt-1 text-(--color-ink-muted)">
 				{#if citation.freeRefUrl}
-					<a href={citation.freeRefUrl} rel="noopener external">{citation.freeRef}</a>
+					<a href={citation.freeRefUrl} target="_blank" rel="noopener noreferrer"
+						>{citation.freeRef}</a
+					>
 				{:else}
 					{citation.freeRef}
 				{/if}

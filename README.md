@@ -84,7 +84,3 @@ Any public repository on GitHub can be forked; the licenses above govern what yo
 ## Citation
 
 If you reference the library, see [`CITATION.cff`](CITATION.cff). Each model page also carries a "cite this page" block alongside the original paper's citation.
-
-## Credit
-
-Built by Hashim Khan.

@@ -17,7 +17,8 @@
 			</a>
 			<a
 				href={repoUrl}
-				rel="noopener external"
+				target="_blank"
+				rel="noopener noreferrer"
 				aria-label="Source on GitHub"
 				class="flex items-center text-(--color-ink-muted) hover:text-(--color-ink) hover:no-underline"
 			>

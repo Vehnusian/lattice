@@ -76,7 +76,12 @@
 				>
 					<span>{active.filename}</span>
 					{#if active.repoUrl}
-						<a href={active.repoUrl} rel="noopener external" class="hover:text-(--color-ink)">
+						<a
+							href={active.repoUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="hover:text-(--color-ink)"
+						>
 							github
 						</a>
 					{/if}

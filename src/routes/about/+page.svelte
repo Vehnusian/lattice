@@ -113,11 +113,14 @@
 	<section class="mt-3 space-y-4 leading-relaxed text-(--color-ink-muted)">
 		<p>
 			Code is released under
-			<a href="{repoUrl}/blob/main/LICENSE" rel="noopener external">PolyForm Noncommercial</a>,
-			prose and figures under
-			<a href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt" rel="noopener external">CC BY-NC 4.0</a>.
-			You may read, study, and cite the work for noncommercial purposes; commercial use is not
-			permitted. All source is on <a href={repoUrl} rel="noopener external">GitHub</a>.
+			<a href="{repoUrl}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"
+				>PolyForm Noncommercial</a
+			>, prose and figures under
+			<a href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt" target="_blank" rel="noopener noreferrer"
+				>CC BY-NC 4.0</a
+			>. You may read, study, and cite the work for noncommercial purposes; commercial use is not
+			permitted. All source is on
+			<a href={repoUrl} target="_blank" rel="noopener noreferrer">GitHub</a>.
 		</p>
 	</section>
 

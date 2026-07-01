@@ -51,7 +51,9 @@
 			</p>
 			<p class="mt-3 leading-relaxed text-(--color-ink-muted)">
 				Track progress on
-				<a href="https://github.com/Vehnusian/lattice" rel="noopener external">GitHub</a>.
+				<a href="https://github.com/Vehnusian/lattice" target="_blank" rel="noopener noreferrer"
+					>GitHub</a
+				>.
 			</p>
 		</div>
 	</div>

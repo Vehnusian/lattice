@@ -7,13 +7,17 @@
 		class="mx-auto flex max-w-(--max-w-page) flex-col gap-3 px-6 py-8 font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle) sm:flex-row sm:items-center sm:justify-between"
 	>
 		<p>
-			<a href="{repoUrl}/blob/main/LICENSE" rel="noopener external" class="hover:text-(--color-ink)"
-				>PolyForm NC</a
+			<a
+				href="{repoUrl}/blob/main/LICENSE"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hover:text-(--color-ink)">PolyForm NC</a
 			>
 			<span class="px-2 text-(--color-rule-strong)">/</span>
 			<a
 				href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt"
-				rel="noopener external"
+				target="_blank"
+				rel="noopener noreferrer"
 				class="hover:text-(--color-ink)">CC BY-NC</a
 			>
 		</p>
