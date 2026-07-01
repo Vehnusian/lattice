@@ -11,7 +11,7 @@
 	const description =
 		'A reference library of validated complex systems models. Each one has an interactive simulation, the math, and citations to the source literature.';
 	const baseUrl = 'https://lattice-gray-one.vercel.app';
-	const ogImage = `${baseUrl}/og-image.png`;
+	const ogImage = `${baseUrl}/og-image.jpg`;
 	const url = $derived(`${baseUrl}${$page.url.pathname}`);
 </script>
 
@@ -25,8 +25,8 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={url} />
 	<meta property="og:image" content={ogImage} />
-	<meta property="og:image:width" content="1904" />
-	<meta property="og:image:height" content="687" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="433" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={siteName} />
 	<meta name="twitter:description" content={description} />
