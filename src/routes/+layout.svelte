@@ -10,7 +10,9 @@
 	const siteName = 'lattice';
 	const description =
 		'A reference library of validated complex systems models. Each one has an interactive simulation, the math, and citations to the source literature.';
-	const url = $derived(`https://lattice.dev${$page.url.pathname}`);
+	const baseUrl = 'https://lattice-gray-one.vercel.app';
+	const ogImage = `${baseUrl}/og-image.png`;
+	const url = $derived(`${baseUrl}${$page.url.pathname}`);
 </script>
 
 <svelte:head>
@@ -22,9 +24,13 @@
 	<meta property="og:title" content={siteName} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={url} />
-	<meta name="twitter:card" content="summary" />
+	<meta property="og:image" content={ogImage} />
+	<meta property="og:image:width" content="1904" />
+	<meta property="og:image:height" content="687" />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={siteName} />
 	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
 <div class="flex min-h-dvh flex-col">
