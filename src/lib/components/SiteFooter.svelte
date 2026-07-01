@@ -17,6 +17,6 @@
 				class="hover:text-(--color-ink)">CC-BY-4.0</a
 			>
 		</p>
-		<p>v0.0.1 · early infrastructure</p>
+		<p>v0.1.0 · Schelling live</p>
 	</div>
 </footer>

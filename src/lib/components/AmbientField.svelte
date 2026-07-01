@@ -243,13 +243,7 @@
 		overflow: hidden;
 		pointer-events: none;
 		z-index: 0;
-		mask-image: linear-gradient(
-			to bottom,
-			transparent 0%,
-			transparent 25%,
-			black 65%,
-			black 100%
-		);
+		mask-image: linear-gradient(to bottom, transparent 0%, transparent 25%, black 65%, black 100%);
 		-webkit-mask-image: linear-gradient(
 			to bottom,
 			transparent 0%,

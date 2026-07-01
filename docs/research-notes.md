@@ -160,7 +160,7 @@ General references:
 7. **Accessibility scope:** keyboard for controls, ARIA labels for canvases. Full keyboard simulation interaction is stretch.
 8. **Peer review:** ask one professor + one developer to review each model before publishing.
 9. **Analytics:** Plausible (privacy-respecting) on Vercel.
-10. **Naming:** repo name and site name not decided.
+10. **Naming:** resolved. Project name is `lattice`.
 
 ---
 

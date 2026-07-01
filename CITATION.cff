@@ -10,6 +10,8 @@ abstract: >-
 authors:
   - family-names: Khan
     given-names: Hashim
+version: 0.1.0
+date-released: 2026-05-16
 type: software
 license: MIT
 url: 'https://github.com/Vehnusian/lattice'

@@ -30,7 +30,7 @@ Working rules for engineering, validation, documentation, and design. Every rule
 15. Each model has a README in its folder using these eight headings: What is it, How it works, How to use it, Things to notice, Things to try, Extending the model, Related models, Credits and references.
 16. Repository carries a `CITATION.cff` at the root and one per model folder. The per-model file uses `preferred-citation` to point at the original paper, so users can cite the underlying model distinctly from this implementation.
 17. `CONTRIBUTING.md` specifies: conventional commit messages, pre-commit hooks (`prettier`, `eslint`, `vitest --run`), and the steps to add a new model. New-model PRs follow a checklist gate.
-18. `NOTES.md` at the repo root is updated at the end of every working session with current state, last decisions, next action, and open questions.
+18. A private, gitignored `NOTES.md` at the repo root captures in-flight state (current work, last decisions, next action, open questions) and is updated at the end of every working session. It is never committed.
 
 ## Design & interaction
 
