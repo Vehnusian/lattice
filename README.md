@@ -1,63 +1,90 @@
 # lattice
 
-A reference library of validated complex systems models. Each model has an interactive simulation, a plain-language explanation, the underlying math, and a citation back to the original literature.
+A reference library of validated complex systems models. Every model gets an interactive simulation, a plain-language explanation, the math, and a citation to the source literature.
 
-Live: [lattice-gray-one.vercel.app](https://lattice-gray-one.vercel.app)
+**[View the live site →](https://lattice-gray-one.vercel.app)**
 
-## What this is
+[![live site](https://img.shields.io/badge/live-lattice--gray--one.vercel.app-B5450B?style=flat-square)](https://lattice-gray-one.vercel.app)
+[![check](https://github.com/Vehnusian/lattice/actions/workflows/check.yml/badge.svg)](https://github.com/Vehnusian/lattice/actions/workflows/check.yml)
+[![license: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue?style=flat-square)](LICENSE)
 
-A modern, searchable, mobile-friendly reference for complex systems models — segregation, epidemics, networks, cellular automata, reaction-diffusion, self-organized criticality, and more.
+## What it is
 
-Built for university students through professors. Use it to quickly grasp an unfamiliar model, reference one while teaching, or play with parameters to build intuition.
+Segregation, epidemics, networks, cellular automata, criticality, synchronization: the canonical models of complex systems are scattered across decades of papers, textbooks, and one-off demos. Lattice collects them in one place, with the same layout on every page, so learning one page teaches you where to find things on all the others.
 
-Current status: one model published ([Schelling segregation](https://lattice-gray-one.vercel.app/models/schelling)), sixty-plus in the catalog.
+It is built for university students and instructors. Grasp an unfamiliar model in a few minutes, reference a familiar one while teaching, or change the parameters and watch what happens.
 
-## What this is not
+## Every model page has the same four parts
 
-- A storytelling explorable
-- A long-form essay journal
-- A textbook replacement
-- A teaching curriculum
+- An interactive simulation with the two or three parameters that actually matter.
+- A short, plain-language explanation of how it works.
+- The underlying math, tucked out of the way until you want it.
+- Citations: the original paper, the canonical textbook, and a free alternative when one exists.
+
+## Status
+
+One model is live: [Schelling segregation](https://lattice-gray-one.vercel.app/models/schelling). The catalog tracks 77 models across 13 disciplines, each published one at a time only after it passes the validation process below. See [`docs/roadmap.md`](docs/roadmap.md).
+
+## Validation
+
+Correctness is the whole point, so every model is validated before it is published.
+
+- Where a closed-form analytic result exists, the engine is checked against it (for example, the 2D Ising critical temperature near 2.269, or the site-percolation threshold near 0.593).
+- Where none exists, a Python reference implementation runs alongside the browser engine and their statistics are compared over many seeds.
+
+Each published model carries its validation write-up in its own folder, for example [`src/lib/models/schelling/validation.md`](src/lib/models/schelling/validation.md), plus unit tests that gate the engine on reproducibility and known behavior.
 
 ## Stack
 
-SvelteKit, TypeScript, Tailwind, Vite. Python (NumPy / NetworkX) for reference implementations. Deployed on Vercel.
+SvelteKit 2 and Svelte 5, TypeScript (strict mode), Tailwind CSS v4, Vite. KaTeX for math, Fuse.js for search, Canvas2D for rendering. Python (NumPy / NetworkX) for the reference implementations. Deployed on Vercel.
+
+## Running it locally
 
 Requires Node 20+ and pnpm.
-
-## Development
 
 ```sh
 pnpm install
 pnpm run dev        # dev server at localhost:5173
-pnpm run build      # production build
-pnpm run preview    # preview the production build
 ```
-
-Quality gates run on every commit:
 
 ```sh
-pnpm run check      # svelte-check (types)
-pnpm run lint       # prettier + eslint
-pnpm run test       # vitest (engine validation)
+pnpm run build      # production build
+pnpm run preview    # serve the build
 ```
 
-## Documentation
+Quality gates, also run in CI on every push and pull request:
 
-- [`docs/positioning.md`](docs/positioning.md) — what this project is and is not
-- [`docs/rulebook.md`](docs/rulebook.md) — engineering, validation, and design rules
-- [`docs/research-notes.md`](docs/research-notes.md) — research informing the design
-- [`docs/catalog.md`](docs/catalog.md) — master list of models being tracked
-- [`docs/adr/`](docs/adr/) — architecture decision records
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add a new model
+```sh
+pnpm run check      # svelte-check, types
+pnpm run lint       # prettier + eslint
+pnpm run test       # vitest, engine validation
+```
 
-Every published model also ships a validation document in its own folder (e.g. [`src/lib/models/schelling/validation.md`](src/lib/models/schelling/validation.md)).
+## Repository layout
 
-## Citation
-
-If you use or reference this library, see [`CITATION.cff`](CITATION.cff). Model pages also carry a "Cite this page" block alongside the original paper citation.
+```
+src/lib/models/<model>/   engine.ts, engine.py, engine.test.ts,
+                          validate.py, validation.md, page.svelte, content.ts
+src/lib/components/       shared UI and simulation primitives
+src/routes/              pages (home, about, /models/<slug>)
+docs/adr/                architecture decision records
+docs/rulebook.md         engineering, validation, and design rules
+docs/roadmap.md          what is live and what is next
+```
 
 ## License
 
-- Code: [MIT](LICENSE)
-- Documentation and prose: [CC-BY-4.0](docs/LICENSE-DOCS.txt)
+This is a source-available project, not an open-source one. You may read, study, and cite the code and prose, and use them for noncommercial purposes such as research and teaching. Commercial use is not permitted.
+
+- Code: [PolyForm Noncommercial 1.0.0](LICENSE)
+- Documentation, prose, and figures: [CC BY-NC 4.0](docs/LICENSE-DOCS.txt)
+
+Any public repository on GitHub can be forked; the licenses above govern what you may legally do with the contents.
+
+## Citation
+
+If you reference the library, see [`CITATION.cff`](CITATION.cff). Each model page also carries a "cite this page" block alongside the original paper's citation.
+
+## Credit
+
+Built by Hashim Khan.

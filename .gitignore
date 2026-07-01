@@ -36,5 +36,10 @@ bench/results-*.json
 NOTES.md
 docs/model-workflow.md
 
+# Internal planning docs (kept local, not part of the public repo)
+docs/positioning.md
+docs/research-notes.md
+docs/catalog.md
+
 # Local Claude Code session config
 .claude/

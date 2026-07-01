@@ -75,9 +75,10 @@
 	<h2 class="mt-10 text-2xl font-semibold tracking-tight text-(--color-ink)">Reproducibility</h2>
 	<section class="mt-4 space-y-4 leading-relaxed text-(--color-ink-muted)">
 		<p>
-			Every model's source code lives in the repository and runs locally. The browser simulation,
-			the Python reference implementation, the validation tests, and the prose for each page are all
-			version-controlled. Anyone can clone, build, and reproduce the figures.
+			Every model's source code lives in the repository. The browser simulation, the Python
+			reference implementation, the validation tests, and the prose for each page are all
+			version-controlled and open to inspection, so the results can be checked against the code that
+			produced them.
 		</p>
 	</section>
 
@@ -111,10 +112,12 @@
 	<p class="font-mono text-xs uppercase tracking-wider text-(--color-ink-subtle)">License</p>
 	<section class="mt-3 space-y-4 leading-relaxed text-(--color-ink-muted)">
 		<p>
-			Code is released under <a href="{repoUrl}/blob/main/LICENSE" rel="noopener external">MIT</a>.
-			Prose and figures under
-			<a href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt" rel="noopener external">CC-BY-4.0</a>. All
-			source is on <a href={repoUrl} rel="noopener external">GitHub</a>.
+			Code is released under
+			<a href="{repoUrl}/blob/main/LICENSE" rel="noopener external">PolyForm Noncommercial</a>,
+			prose and figures under
+			<a href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt" rel="noopener external">CC BY-NC 4.0</a>.
+			You may read, study, and cite the work for noncommercial purposes; commercial use is not
+			permitted. All source is on <a href={repoUrl} rel="noopener external">GitHub</a>.
 		</p>
 	</section>
 

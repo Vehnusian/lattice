@@ -8,13 +8,13 @@
 	>
 		<p>
 			<a href="{repoUrl}/blob/main/LICENSE" rel="noopener external" class="hover:text-(--color-ink)"
-				>MIT</a
+				>PolyForm NC</a
 			>
 			<span class="px-2 text-(--color-rule-strong)">/</span>
 			<a
 				href="{repoUrl}/blob/main/docs/LICENSE-DOCS.txt"
 				rel="noopener external"
-				class="hover:text-(--color-ink)">CC-BY-4.0</a
+				class="hover:text-(--color-ink)">CC BY-NC</a
 			>
 		</p>
 		<p>v0.1.0 · Schelling live</p>

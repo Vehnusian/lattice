@@ -1,6 +1,8 @@
 # 0001. License: MIT for code, CC-BY-4.0 for prose
 
-Status: Accepted
+Status: Superseded by [ADR-0005](0005-license-noncommercial.md)
+
+_Retained as a historical record. The project moved to a source-available, noncommercial license; see ADR-0005._
 
 ## Context
 
